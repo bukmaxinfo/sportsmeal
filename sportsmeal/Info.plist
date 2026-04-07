@@ -2,6 +2,14 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSHealthShareUsageDescription</key>
+	<string>SportsMeal reads your health data to sync weight, steps, and active calories for more accurate tracking.</string>
+	<key>NSHealthUpdateUsageDescription</key>
+	<string>SportsMeal writes meal calories and exercise sessions to Apple Health to keep your health data in one place.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>SportsMeal needs camera access to photograph your meals for calorie estimation.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>SportsMeal needs photo library access to select meal photos for calorie estimation.</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>remote-notification</string>

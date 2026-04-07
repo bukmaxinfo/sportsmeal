@@ -12,7 +12,11 @@ import SwiftData
 struct sportsmealApp: App {
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
-            Item.self,
+            UserProfile.self,
+            Meal.self,
+            ExerciseEntry.self,
+            PantryItem.self,
+            MealTemplate.self,
         ])
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
 
@@ -25,8 +29,25 @@ struct sportsmealApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            RootView()
+                .preferredColorScheme(.dark)
+                .tint(AppTheme.gold)
         }
         .modelContainer(sharedModelContainer)
+    }
+}
+
+struct RootView: View {
+    @Query private var profiles: [UserProfile]
+    @AppStorage("hasCompletedOnboarding") private var hasCompletedOnboarding = false
+
+    var body: some View {
+        if profiles.isEmpty && !hasCompletedOnboarding {
+            OnboardingView {
+                hasCompletedOnboarding = true
+            }
+        } else {
+            MainTabView()
+        }
     }
 }
