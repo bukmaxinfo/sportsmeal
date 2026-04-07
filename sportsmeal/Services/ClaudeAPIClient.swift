@@ -2,9 +2,32 @@ import Foundation
 import UIKit
 
 /// Shared client for all Claude API interactions.
-/// Handles authentication, request building, response parsing, and image encoding.
+/// Handles authentication, request building, response parsing, image encoding, and caching.
 actor ClaudeAPIClient {
     static let shared = ClaudeAPIClient()
+
+    // MARK: - Cache
+    private struct CacheEntry {
+        let response: String
+        let timestamp: Date
+    }
+    private var cache: [String: CacheEntry] = [:]
+    private let cacheTTL: TimeInterval = 300 // 5 minutes
+
+    // MARK: - Usage Tracking
+    private(set) var totalRequestCount: Int = 0
+    private(set) var totalTokensEstimated: Int = 0
+    private(set) var visionRequestCount: Int = 0
+    private(set) var textRequestCount: Int = 0
+
+    var usageSummary: APIUsageSummary {
+        APIUsageSummary(
+            totalRequests: totalRequestCount,
+            visionRequests: visionRequestCount,
+            textRequests: textRequestCount,
+            estimatedTokens: totalTokensEstimated
+        )
+    }
 
     enum APIError: LocalizedError {
         case noAPIKey
@@ -24,7 +47,11 @@ actor ClaudeAPIClient {
 
     // MARK: - Text-only request
 
-    func sendText(prompt: String, maxTokens: Int = 1024) async throws -> String {
+    func sendText(prompt: String, maxTokens: Int = 1024, useCache: Bool = true) async throws -> String {
+        if useCache, let cached = getCached(key: prompt) {
+            return cached
+        }
+
         let requestBody: [String: Any] = [
             "model": APIConfig.model,
             "max_tokens": maxTokens,
@@ -32,14 +59,22 @@ actor ClaudeAPIClient {
                 ["role": "user", "content": prompt]
             ]
         ]
-        return try await send(body: requestBody)
+        let result = try await send(body: requestBody)
+        textRequestCount += 1
+        totalRequestCount += 1
+        totalTokensEstimated += result.count / 4 + prompt.count / 4
+
+        if useCache {
+            setCache(key: prompt, value: result)
+        }
+        return result
     }
 
     // MARK: - Vision request (image + text)
 
     func sendVision(image: UIImage, prompt: String, maxTokens: Int = 1024) async throws -> String {
         let resized = downscale(image, maxDimension: 1024)
-        guard let imageData = resized.jpegData(compressionQuality: 0.8) else {
+        guard let imageData = resized.jpegData(compressionQuality: 0.6) else {
             throw APIError.invalidImage
         }
         let base64 = imageData.base64EncodedString()
@@ -67,7 +102,11 @@ actor ClaudeAPIClient {
                 ]
             ]
         ]
-        return try await send(body: requestBody)
+        let result = try await send(body: requestBody)
+        visionRequestCount += 1
+        totalRequestCount += 1
+        totalTokensEstimated += result.count / 4 + 1000 // Vision requests use ~1K tokens for image
+        return result
     }
 
     // MARK: - JSON decoding helper
@@ -140,6 +179,27 @@ actor ClaudeAPIClient {
         return try JSONDecoder().decode(type, from: data)
     }
 
+    // MARK: - Cache
+    private func getCached(key: String) -> String? {
+        guard let entry = cache[key],
+              Date().timeIntervalSince(entry.timestamp) < cacheTTL else {
+            cache.removeValue(forKey: key)
+            return nil
+        }
+        return entry.response
+    }
+
+    private func setCache(key: String, value: String) {
+        cache[key] = CacheEntry(response: value, timestamp: Date())
+        // Evict old entries
+        let now = Date()
+        cache = cache.filter { now.timeIntervalSince($0.value.timestamp) < cacheTTL }
+    }
+
+    func clearCache() {
+        cache.removeAll()
+    }
+
     private func downscale(_ image: UIImage, maxDimension: CGFloat) -> UIImage {
         let size = image.size
         guard max(size.width, size.height) > maxDimension else { return image }
@@ -154,4 +214,11 @@ actor ClaudeAPIClient {
             image.draw(in: CGRect(origin: .zero, size: newSize))
         }
     }
+}
+
+struct APIUsageSummary {
+    let totalRequests: Int
+    let visionRequests: Int
+    let textRequests: Int
+    let estimatedTokens: Int
 }

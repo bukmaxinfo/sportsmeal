@@ -36,6 +36,9 @@ struct HomeView: View {
                         macroRingsCard(profile: profile)
                     }
 
+                    // Streak
+                    streakCard
+
                     // Calories remaining breakdown
                     if let profile = profile {
                         caloriesRemainingCard(profile: profile)
@@ -165,6 +168,29 @@ struct HomeView: View {
                     .font(.system(size: 9))
                     .foregroundStyle(AppTheme.textTertiary)
             }
+        }
+    }
+
+    // MARK: - Streak
+    @ViewBuilder
+    private var streakCard: some View {
+        let streak = StreakService.currentStreak(meals: allMeals)
+        if streak > 0 {
+            HStack(spacing: 12) {
+                Image(systemName: "flame.fill")
+                    .font(.title2)
+                    .foregroundStyle(streak >= 7 ? AppTheme.gold : AppTheme.warning)
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("\(streak) day streak")
+                        .font(.subheadline.weight(.semibold))
+                        .foregroundStyle(AppTheme.textPrimary)
+                    Text(streak >= 7 ? "You're on fire! Keep it going." : "Keep logging to build your streak!")
+                        .font(.caption)
+                        .foregroundStyle(AppTheme.textTertiary)
+                }
+                Spacer()
+            }
+            .luxuryCard()
         }
     }
 

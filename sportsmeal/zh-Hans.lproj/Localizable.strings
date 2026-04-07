@@ -1,0 +1,264 @@
+/* SportsMeal - 简体中文 */
+
+/* Tab Bar */
+"Home" = "首页";
+"Scan" = "扫描";
+"History" = "历史";
+"Exercise" = "运动";
+"Pantry" = "食材";
+"Profile" = "个人";
+
+/* Home View */
+"SportsMeal" = "SportsMeal";
+"Today's Intake" = "今日摄入";
+"Macros" = "营养素";
+"Scan a meal to see macro breakdown" = "扫描一餐来查看营养素分解";
+"Protein" = "蛋白质";
+"Carbs" = "碳水";
+"Fat" = "脂肪";
+"Remaining" = "剩余";
+"kcal" = "千卡";
+"BMR" = "基础代谢";
+"exercise" = "运动";
+"food" = "饮食";
+"BMI" = "BMI";
+"TDEE" = "TDEE";
+"Meal Ideas" = "用餐建议";
+"Get Ideas" = "获取建议";
+"Refresh" = "刷新";
+"You've used most of your calorie budget today" = "今天的热量预算已用完";
+"Today's Meals" = "今日餐食";
+"No meals logged" = "暂无记录";
+"Tap 'Scan' to photograph your first meal" = "点击「扫描」拍摄你的第一餐";
+"Delete Meal" = "删除餐食";
+"Delete" = "删除";
+"Cancel" = "取消";
+"Run" = "跑步";
+"Walk" = "步行";
+"Cycle" = "骑行";
+"Swim" = "游泳";
+
+/* Health Stats Explanations */
+"Body Mass Index — a measure of body fat based on your weight and height. Normal range is 18.5–24.9." = "身体质量指数——根据身高和体重计算的体脂指标。正常范围为 18.5–24.9。";
+"Basal Metabolic Rate — the calories your body burns at complete rest just to keep you alive." = "基础代谢率——你的身体在完全静息状态下维持生命所消耗的热量。";
+"Total Daily Energy Expenditure — your BMR multiplied by your activity level." = "每日总能量消耗——基础代谢率乘以你的活动系数。";
+
+/* Camera / Scan View */
+"Scan Meal" = "扫描餐食";
+"Barcode" = "条码";
+"Scan Menu" = "扫描菜单";
+"API Key Required" = "需要 API 密钥";
+"To analyze meal photos, set up your Anthropic API key first." = "要分析餐食照片，请先设置 Anthropic API 密钥。";
+"Set Up API Key" = "设置 API 密钥";
+"Tap to select a meal photo" = "点击选择餐食照片";
+"Choose from your photo library" = "从相册中选择";
+"Choose Different Photo" = "选择其他照片";
+"Estimated Calories" = "估算热量";
+"Food Items" = "食物明细";
+"Save Meal" = "保存餐食";
+"Meal saved!" = "已保存！";
+"Portion Size" = "份量大小";
+"Cuisine (optional)" = "菜系（可选）";
+"Auto" = "自动";
+"Notes (optional)" = "备注（可选）";
+"e.g., shared plate, extra sauce, half eaten" = "例如：拼盘、多加酱料、吃了一半";
+"Analyze Meal" = "分析餐食";
+"Analyzing your meal..." = "正在分析你的餐食...";
+"Could not load the selected photo" = "无法加载选中的照片";
+"Quick Log" = "快速记录";
+"Delete Template" = "删除模板";
+
+/* History View */
+"List" = "列表";
+"Charts" = "图表";
+"No Meals Yet" = "暂无餐食记录";
+"Your meal history will appear here" = "你的餐食记录将显示在这里";
+"Daily Calories" = "每日热量";
+"Meals Per Day" = "每日餐数";
+"Meal Detail" = "餐食详情";
+"Total Calories" = "总热量";
+"Save as Template" = "保存为模板";
+"Template name" = "模板名称";
+"Save" = "保存";
+"Save this meal as a quick-log template." = "将这餐保存为快速记录模板。";
+"Template saved!" = "模板已保存！";
+"Delete this meal?" = "删除这餐？";
+
+/* Exercise View */
+"Weight Loss Plan" = "减重计划";
+"Current kg" = "当前体重";
+"Goal kg" = "目标体重";
+"Set a goal weight in your Profile to see projections" = "在个人资料中设置目标体重以查看预测";
+"Aggressive deficit" = "过度节食";
+"On track" = "进展良好";
+"Maintaining weight" = "维持体重";
+"Calorie surplus" = "热量盈余";
+"Burn/day" = "每日消耗";
+"Eat/day" = "每日摄入";
+"Net/day" = "每日净值";
+"Realistic Timeline" = "合理时间线";
+"Based on a safe rate of ~0.5 kg/week" = "基于安全减重速率 ~0.5公斤/周";
+"Recommended Weekly Exercise" = "每周推荐运动";
+"Running" = "跑步";
+"Walking" = "步行";
+"or" = "或";
+"Your diet alone creates enough deficit!" = "仅靠饮食已产生足够的热量差！";
+"Today's Exercise" = "今日运动";
+"No exercise logged today" = "今天还没有运动记录";
+"Recent" = "近期记录";
+"Start logging exercises to track progress" = "开始记录运动来跟踪进展";
+"Log Exercise" = "记录运动";
+
+/* Profile View */
+"No Profile" = "无个人资料";
+"Profile not found" = "未找到个人资料";
+"Personal Info" = "个人信息";
+"Name" = "姓名";
+"Height" = "身高";
+"cm" = "厘米";
+"Weight" = "体重";
+"kg" = "公斤";
+"Sex" = "性别";
+"Activity Level" = "活动量";
+"Health Metrics" = "健康指标";
+"Goal" = "目标";
+"Target Weight" = "目标体重";
+"To Lose" = "待减";
+"Dietary Preferences" = "饮食偏好";
+"Diet" = "饮食";
+"No Preference" = "无偏好";
+"Settings" = "设置";
+"Apple Health" = "Apple 健康";
+"API Key" = "API 密钥";
+"Not set" = "未设置";
+"Done" = "完成";
+"Edit" = "编辑";
+"OK" = "好";
+
+/* Pantry View */
+"Add Item" = "添加食材";
+"Scan Fridge" = "扫描冰箱";
+"Your pantry is empty" = "食材柜是空的";
+"Add items manually or scan your fridge" = "手动添加食材或扫描冰箱";
+"Error" = "错误";
+"Recipe Suggestions" = "菜谱推荐";
+"Add Pantry Item" = "添加食材";
+"Item name" = "食材名称";
+"Category" = "类别";
+"Expiration date" = "过期日期";
+"Expires" = "过期";
+"Add" = "添加";
+"Select a fridge photo" = "选择冰箱照片";
+"Scanning fridge..." = "正在扫描冰箱...";
+"Add All to Pantry" = "全部添加到食材柜";
+"Used" = "已用";
+"Ingredients" = "食材";
+"Instructions" = "步骤";
+
+/* Menu Scanner */
+"Menu Scanner" = "菜单扫描";
+"Scan a Restaurant Menu" = "扫描餐厅菜单";
+"Take a photo of the menu to see calorie estimates" = "拍摄菜单照片查看热量估算";
+"Analyzing menu..." = "正在分析菜单...";
+"Dishes" = "菜品";
+"Fits your budget" = "符合预算";
+"Over budget" = "超出预算";
+"Choose Different Menu" = "选择其他菜单";
+
+/* Barcode Scanner */
+"Barcode Scanner" = "条码扫描";
+"Point camera at a barcode" = "将摄像头对准条码";
+"Looking up product..." = "正在查询产品...";
+"Scan Again" = "重新扫描";
+"Log This Food" = "记录此食品";
+"Saved!" = "已保存！";
+"Scan Another" = "扫描下一个";
+
+/* Health View */
+"Connect to Apple Health to sync your weight, steps, and activity data." = "连接 Apple 健康以同步体重、步数和活动数据。";
+"Connect to Health" = "连接健康";
+"Connected" = "已连接";
+"Not connected" = "未连接";
+"Latest Weight" = "最近体重";
+"Today's Steps" = "今日步数";
+"Active Calories" = "活动热量";
+"Health" = "健康";
+
+/* Onboarding */
+"AI-powered calorie tracking\nthat fits your lifestyle" = "AI 驱动的热量追踪\n适合你的生活方式";
+"What should we call you?" = "你叫什么名字？";
+"Your name" = "你的名字";
+"Continue" = "继续";
+"About You" = "关于你";
+"Age" = "年龄";
+"How active are you in a typical week?" = "你平时一周的运动量如何？";
+"Your Goal" = "你的目标";
+"Almost There!" = "即将完成！";
+"SportsMeal uses Claude AI to analyze your meals.\nYou'll need an Anthropic API key to get started." = "SportsMeal 使用 Claude AI 分析你的餐食。\n你需要一个 Anthropic API 密钥来开始使用。";
+"Skip for Now" = "暂时跳过";
+"API key configured!" = "API 密钥已配置！";
+"Get Started" = "开始使用";
+"Back" = "返回";
+
+/* API Key Settings */
+"sk-ant-..." = "sk-ant-...";
+"API key is valid" = "API 密钥有效";
+"Validating..." = "验证中...";
+"Save API Key" = "保存 API 密钥";
+"Remove API Key" = "移除 API 密钥";
+"Get an API key from Anthropic" = "从 Anthropic 获取 API 密钥";
+"API Key Saved" = "API 密钥已保存";
+"Your API key has been securely stored in the Keychain." = "你的 API 密钥已安全存储在钥匙串中。";
+"SportsMeal uses the Claude API to analyze meal photos. You'll need an Anthropic API key to use this feature." = "SportsMeal 使用 Claude API 分析餐食照片。你需要 Anthropic API 密钥才能使用此功能。";
+
+/* Diet Types */
+"Keto" = "生酮";
+"Whole 30" = "Whole 30";
+"Paleo" = "原始饮食";
+"Vegan" = "纯素";
+"Vegetarian" = "素食";
+"Mediterranean" = "地中海";
+"Low Carb" = "低碳水";
+"High Protein" = "高蛋白";
+
+/* Activity Levels */
+"Sedentary" = "久坐";
+"Lightly Active" = "轻度活动";
+"Moderately Active" = "中度活动";
+"Very Active" = "高度活动";
+"Extra Active" = "极高活动";
+"Little or no exercise" = "很少或没有运动";
+"Exercise 1-3 days/week" = "每周运动1-3天";
+"Exercise 3-5 days/week" = "每周运动3-5天";
+"Exercise 6-7 days/week" = "每周运动6-7天";
+"Very intense exercise daily" = "每天高强度运动";
+
+/* BMI Categories */
+"Underweight" = "偏瘦";
+"Normal" = "正常";
+"Overweight" = "超重";
+"Obese" = "肥胖";
+
+/* Sex */
+"Male" = "男";
+"Female" = "女";
+
+/* Cuisines */
+"Chinese" = "中餐";
+"Japanese" = "日料";
+"Korean" = "韩餐";
+"Indian" = "印度菜";
+"Thai" = "泰餐";
+"Mexican" = "墨西哥菜";
+"Italian" = "意大利菜";
+"American" = "美式";
+"Other" = "其他";
+
+/* Macro Labels */
+"P" = "蛋";
+"C" = "碳";
+"F" = "脂";
+"kcal/day" = "千卡/天";
+"NORMAL" = "正常";
+"ACTIVE" = "活跃";
+"KCAL" = "千卡";

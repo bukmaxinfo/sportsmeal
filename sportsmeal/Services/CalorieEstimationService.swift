@@ -50,7 +50,12 @@ actor CalorieEstimationService {
     }
 
     private func buildPrompt(portionMultiplier: Double, notes: String?, cuisine: String?) -> String {
+        let isChinese = Locale.current.language.languageCode?.identifier == "zh"
         var prompt = "Analyze this meal photo and estimate the calories for each food item visible.\n\n"
+
+        if isChinese {
+            prompt += "The user's language is Chinese. Return food names in Chinese (e.g., 宫保鸡丁, 米饭, 红烧肉). Be familiar with Chinese dishes, portion sizes, and cooking methods (stir-frying with oil, steaming, braising, hot pot, dim sum, etc.).\n\n"
+        }
 
         if let cuisine = cuisine, !cuisine.isEmpty {
             prompt += "This is \(cuisine) cuisine. Consider typical serving sizes, cooking methods (e.g., oil-heavy stir fry vs steamed), and common ingredients for this cuisine when estimating calories.\n\n"

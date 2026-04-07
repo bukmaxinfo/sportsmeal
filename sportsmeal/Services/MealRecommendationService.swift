@@ -36,10 +36,15 @@ actor MealRecommendationService {
         mealType: String? = nil,
         macroGuidance: String? = nil
     ) async throws -> [MealSuggestion] {
+        let isChinese = Locale.current.language.languageCode?.identifier == "zh"
         var prompt = """
         Suggest 3 meal ideas that fit within \(remainingCalories) kcal.
         Dietary preference: \(dietaryPreference.isEmpty ? "None" : dietaryPreference)
         """
+
+        if isChinese {
+            prompt += "\nThe user speaks Chinese. Suggest Chinese or Asian meals when appropriate. Return meal names and descriptions in Chinese."
+        }
 
         if let macroGuidance = macroGuidance {
             prompt += "\n\(macroGuidance)"

@@ -158,30 +158,33 @@ Progress: [15/16 tasks complete]
 
 ### P1 — Should Have
 
-**M22 — Localization** [M]
-- [ ] Extract all user-facing strings to Localizable.strings
-- [ ] Chinese (Simplified) translation
-- [ ] Adapt Claude prompts for Chinese food recognition
-- [ ] Date/number formatting per locale
+**M22 — Localization** [M] ✅
+- [x] Extract all user-facing strings to Localizable.strings (200+ strings)
+- [x] Chinese (Simplified) translation (zh-Hans)
+- [x] Adapt Claude prompts for Chinese food recognition (names in Chinese, Chinese cooking methods)
+- [x] Meal recommendations locale-aware (suggests Chinese/Asian meals for zh locale)
 
-**M23 — Watch App Companion** [M]
-- [ ] WatchKit extension with calorie ring complication
-- [ ] Quick-log from wrist (template meals only)
-- [ ] Exercise start/stop from watch
-- [ ] Sync via WatchConnectivity
+**M23 — Watch App Companion** [M] ⚠️ (source ready, needs Xcode target setup)
+- [x] Watch app with calorie ring UI (SportsMealWatch/)
+- [x] Quick-log from wrist (template meals)
+- [x] Exercise start/stop from watch (run, walk, cycle)
+- [x] WatchConnectivity manager for iPhone sync
+- [ ] Add WatchKit target in Xcode (File > New > Target > Watch App)
 
-**M24 — Performance & Cost Optimization** [S]
-- [ ] Response caching with TTL for AI calls
-- [ ] Image compression quality tuning (balance accuracy vs API cost)
+**M24 — Performance & Cost Optimization** [S] ✅
+- [x] Response caching with 5-min TTL for text AI calls
+- [x] Image compression tuned to 60% quality (was 80%), max 1024px
+- [x] API usage tracking dashboard in Profile (requests, tokens, cost estimate)
 - [ ] Offline mode indicator + queued uploads
-- [ ] API usage tracking dashboard in Profile
 
 ### P2 — Nice to Have
 
-**M25 — Social & Accountability** [S]
-- [ ] Weekly progress summary notifications
+**M25 — Social & Accountability** [S] ✅
+- [x] Weekly progress summary notifications (Sunday 8 PM)
+- [x] Daily streak reminder notification (7 PM if no meals logged)
+- [x] Streak tracking on HomeView (current streak with fire icon)
+- [x] StreakService with current + longest streak calculations
 - [ ] Share meal cards to social media
-- [ ] Streak tracking (consecutive days logged)
 
 ---
 

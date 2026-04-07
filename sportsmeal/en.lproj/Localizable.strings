@@ -1,0 +1,260 @@
+/* SportsMeal - English (Base) Localizable Strings */
+
+/* Tab Bar */
+"Home" = "Home";
+"Scan" = "Scan";
+"History" = "History";
+"Exercise" = "Exercise";
+"Pantry" = "Pantry";
+"Profile" = "Profile";
+
+/* Home View */
+"SportsMeal" = "SportsMeal";
+"Today's Intake" = "Today's Intake";
+"Macros" = "Macros";
+"Scan a meal to see macro breakdown" = "Scan a meal to see macro breakdown";
+"Protein" = "Protein";
+"Carbs" = "Carbs";
+"Fat" = "Fat";
+"Remaining" = "Remaining";
+"kcal" = "kcal";
+"BMR" = "BMR";
+"exercise" = "exercise";
+"food" = "food";
+"BMI" = "BMI";
+"TDEE" = "TDEE";
+"Meal Ideas" = "Meal Ideas";
+"Get Ideas" = "Get Ideas";
+"Refresh" = "Refresh";
+"You've used most of your calorie budget today" = "You've used most of your calorie budget today";
+"Today's Meals" = "Today's Meals";
+"No meals logged" = "No meals logged";
+"Tap 'Scan' to photograph your first meal" = "Tap 'Scan' to photograph your first meal";
+"Delete Meal" = "Delete Meal";
+"Delete" = "Delete";
+"Cancel" = "Cancel";
+"Run" = "Run";
+"Walk" = "Walk";
+"Cycle" = "Cycle";
+"Swim" = "Swim";
+
+/* Health Stats Explanations */
+"Body Mass Index — a measure of body fat based on your weight and height. Normal range is 18.5–24.9." = "Body Mass Index — a measure of body fat based on your weight and height. Normal range is 18.5–24.9.";
+"Basal Metabolic Rate — the calories your body burns at complete rest just to keep you alive." = "Basal Metabolic Rate — the calories your body burns at complete rest just to keep you alive.";
+"Total Daily Energy Expenditure — your BMR multiplied by your activity level." = "Total Daily Energy Expenditure — your BMR multiplied by your activity level.";
+
+/* Camera / Scan View */
+"Scan Meal" = "Scan Meal";
+"Barcode" = "Barcode";
+"Scan Menu" = "Scan Menu";
+"API Key Required" = "API Key Required";
+"To analyze meal photos, set up your Anthropic API key first." = "To analyze meal photos, set up your Anthropic API key first.";
+"Set Up API Key" = "Set Up API Key";
+"Tap to select a meal photo" = "Tap to select a meal photo";
+"Choose from your photo library" = "Choose from your photo library";
+"Choose Different Photo" = "Choose Different Photo";
+"Estimated Calories" = "Estimated Calories";
+"Food Items" = "Food Items";
+"Save Meal" = "Save Meal";
+"Meal saved!" = "Meal saved!";
+"Portion Size" = "Portion Size";
+"Cuisine (optional)" = "Cuisine (optional)";
+"Auto" = "Auto";
+"Notes (optional)" = "Notes (optional)";
+"e.g., shared plate, extra sauce, half eaten" = "e.g., shared plate, extra sauce, half eaten";
+"Analyze Meal" = "Analyze Meal";
+"Analyzing your meal..." = "Analyzing your meal...";
+"Could not load the selected photo" = "Could not load the selected photo";
+"Quick Log" = "Quick Log";
+"Delete Template" = "Delete Template";
+
+/* History View */
+"List" = "List";
+"Charts" = "Charts";
+"No Meals Yet" = "No Meals Yet";
+"Your meal history will appear here" = "Your meal history will appear here";
+"Daily Calories" = "Daily Calories";
+"Meals Per Day" = "Meals Per Day";
+"Meal Detail" = "Meal Detail";
+"Total Calories" = "Total Calories";
+"Save as Template" = "Save as Template";
+"Template name" = "Template name";
+"Save" = "Save";
+"Save this meal as a quick-log template." = "Save this meal as a quick-log template.";
+"Template saved!" = "Template saved!";
+"Delete this meal?" = "Delete this meal?";
+
+/* Exercise View */
+"Weight Loss Plan" = "Weight Loss Plan";
+"Current kg" = "Current kg";
+"Goal kg" = "Goal kg";
+"Set a goal weight in your Profile to see projections" = "Set a goal weight in your Profile to see projections";
+"Aggressive deficit" = "Aggressive deficit";
+"On track" = "On track";
+"Maintaining weight" = "Maintaining weight";
+"Calorie surplus" = "Calorie surplus";
+"Burn/day" = "Burn/day";
+"Eat/day" = "Eat/day";
+"Net/day" = "Net/day";
+"Realistic Timeline" = "Realistic Timeline";
+"Based on a safe rate of ~0.5 kg/week" = "Based on a safe rate of ~0.5 kg/week";
+"Recommended Weekly Exercise" = "Recommended Weekly Exercise";
+"Running" = "Running";
+"Walking" = "Walking";
+"or" = "or";
+"Your diet alone creates enough deficit!" = "Your diet alone creates enough deficit!";
+"Today's Exercise" = "Today's Exercise";
+"No exercise logged today" = "No exercise logged today";
+"Recent" = "Recent";
+"Start logging exercises to track progress" = "Start logging exercises to track progress";
+"Log Exercise" = "Log Exercise";
+
+/* Profile View */
+"No Profile" = "No Profile";
+"Profile not found" = "Profile not found";
+"Personal Info" = "Personal Info";
+"Name" = "Name";
+"Height" = "Height";
+"cm" = "cm";
+"Weight" = "Weight";
+"kg" = "kg";
+"Sex" = "Sex";
+"Activity Level" = "Activity Level";
+"Health Metrics" = "Health Metrics";
+"Goal" = "Goal";
+"Target Weight" = "Target Weight";
+"To Lose" = "To Lose";
+"Dietary Preferences" = "Dietary Preferences";
+"Diet" = "Diet";
+"No Preference" = "No Preference";
+"Settings" = "Settings";
+"Apple Health" = "Apple Health";
+"API Key" = "API Key";
+"Not set" = "Not set";
+"Done" = "Done";
+"Edit" = "Edit";
+"OK" = "OK";
+
+/* Pantry View */
+"Add Item" = "Add Item";
+"Scan Fridge" = "Scan Fridge";
+"Your pantry is empty" = "Your pantry is empty";
+"Add items manually or scan your fridge" = "Add items manually or scan your fridge";
+"Error" = "Error";
+"Recipe Suggestions" = "Recipe Suggestions";
+"Add Pantry Item" = "Add Pantry Item";
+"Item name" = "Item name";
+"Category" = "Category";
+"Expiration date" = "Expiration date";
+"Expires" = "Expires";
+"Add" = "Add";
+"Select a fridge photo" = "Select a fridge photo";
+"Scanning fridge..." = "Scanning fridge...";
+"Add All to Pantry" = "Add All to Pantry";
+"Used" = "Used";
+"Ingredients" = "Ingredients";
+"Instructions" = "Instructions";
+
+/* Menu Scanner */
+"Menu Scanner" = "Menu Scanner";
+"Scan a Restaurant Menu" = "Scan a Restaurant Menu";
+"Take a photo of the menu to see calorie estimates" = "Take a photo of the menu to see calorie estimates";
+"Analyzing menu..." = "Analyzing menu...";
+"Dishes" = "Dishes";
+"Fits your budget" = "Fits your budget";
+"Over budget" = "Over budget";
+"Choose Different Menu" = "Choose Different Menu";
+
+/* Barcode Scanner */
+"Barcode Scanner" = "Barcode Scanner";
+"Point camera at a barcode" = "Point camera at a barcode";
+"Looking up product..." = "Looking up product...";
+"Scan Again" = "Scan Again";
+"Log This Food" = "Log This Food";
+"Saved!" = "Saved!";
+"Scan Another" = "Scan Another";
+
+/* Health View */
+"Connect to Apple Health to sync your weight, steps, and activity data." = "Connect to Apple Health to sync your weight, steps, and activity data.";
+"Connect to Health" = "Connect to Health";
+"Connected" = "Connected";
+"Not connected" = "Not connected";
+"Latest Weight" = "Latest Weight";
+"Today's Steps" = "Today's Steps";
+"Active Calories" = "Active Calories";
+"Health" = "Health";
+
+/* Onboarding */
+"AI-powered calorie tracking\nthat fits your lifestyle" = "AI-powered calorie tracking\nthat fits your lifestyle";
+"What should we call you?" = "What should we call you?";
+"Your name" = "Your name";
+"Continue" = "Continue";
+"About You" = "About You";
+"Age" = "Age";
+"How active are you in a typical week?" = "How active are you in a typical week?";
+"Your Goal" = "Your Goal";
+"Almost There!" = "Almost There!";
+"SportsMeal uses Claude AI to analyze your meals.\nYou'll need an Anthropic API key to get started." = "SportsMeal uses Claude AI to analyze your meals.\nYou'll need an Anthropic API key to get started.";
+"Skip for Now" = "Skip for Now";
+"API key configured!" = "API key configured!";
+"Get Started" = "Get Started";
+"Back" = "Back";
+
+/* API Key Settings */
+"sk-ant-..." = "sk-ant-...";
+"API key is valid" = "API key is valid";
+"Validating..." = "Validating...";
+"Save API Key" = "Save API Key";
+"Remove API Key" = "Remove API Key";
+"Get an API key from Anthropic" = "Get an API key from Anthropic";
+"API Key Saved" = "API Key Saved";
+"Your API key has been securely stored in the Keychain." = "Your API key has been securely stored in the Keychain.";
+"SportsMeal uses the Claude API to analyze meal photos. You'll need an Anthropic API key to use this feature." = "SportsMeal uses the Claude API to analyze meal photos. You'll need an Anthropic API key to use this feature.";
+
+/* Diet Types */
+"Keto" = "Keto";
+"Whole 30" = "Whole 30";
+"Paleo" = "Paleo";
+"Vegan" = "Vegan";
+"Vegetarian" = "Vegetarian";
+"Mediterranean" = "Mediterranean";
+"Low Carb" = "Low Carb";
+"High Protein" = "High Protein";
+
+/* Activity Levels */
+"Sedentary" = "Sedentary";
+"Lightly Active" = "Lightly Active";
+"Moderately Active" = "Moderately Active";
+"Very Active" = "Very Active";
+"Extra Active" = "Extra Active";
+"Little or no exercise" = "Little or no exercise";
+"Exercise 1-3 days/week" = "Exercise 1-3 days/week";
+"Exercise 3-5 days/week" = "Exercise 3-5 days/week";
+"Exercise 6-7 days/week" = "Exercise 6-7 days/week";
+"Very intense exercise daily" = "Very intense exercise daily";
+
+/* BMI Categories */
+"Underweight" = "Underweight";
+"Normal" = "Normal";
+"Overweight" = "Overweight";
+"Obese" = "Obese";
+
+/* Cuisines */
+"Chinese" = "Chinese";
+"Japanese" = "Japanese";
+"Korean" = "Korean";
+"Indian" = "Indian";
+"Thai" = "Thai";
+"Mexican" = "Mexican";
+"Italian" = "Italian";
+"American" = "American";
+"Other" = "Other";
+
+/* Macro Labels */
+"P" = "P";
+"C" = "C";
+"F" = "F";
+"kcal/day" = "kcal/day";
+"NORMAL" = "NORMAL";
+"ACTIVE" = "ACTIVE";
+"KCAL" = "KCAL";

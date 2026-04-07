@@ -172,6 +172,11 @@ struct ProfileDetailView: View {
                         }
                     }
                 }
+                NavigationLink {
+                    APIUsageView()
+                } label: {
+                    Label("API Usage", systemImage: "chart.bar.fill")
+                }
             }
         }
         .scrollContentBackground(.hidden)
