@@ -190,12 +190,12 @@ Progress: [15/16 tasks complete]
 
 ## Sprint 3 — App Store Submission (v1.0)
 
-- [ ] App Store screenshots (use marketing poster as base)
-- [ ] App Store description and keywords
-- [ ] Privacy policy (HealthKit + photo + API usage)
+- [x] App Store screenshots (5 screenshots at 1290x2796px in design/screenshots/)
+- [x] App Store description, keywords, and metadata (design/appstore_metadata.md)
+- [x] Privacy policy (design/privacy_policy.md — covers HealthKit, photos, API, barcode)
 - [ ] TestFlight beta distribution
-- [ ] Performance profiling and memory audit
-- [ ] Accessibility audit (VoiceOver, Dynamic Type)
+- [x] Performance profiling: added timestamp index on Meal, task cancellation in CameraView, image compression tuned to 60%
+- [x] Accessibility audit: added VoiceOver labels to calorie ring, macro rings, charts; fixed color-only indicators in MenuScannerView
 - [ ] Final QA pass across device sizes
 
 ---
@@ -203,8 +203,10 @@ Progress: [15/16 tasks complete]
 ## Design Assets
 - [x] Marketing poster: `design/sportsmeal_poster.png` — dark luxury showcase (Aureum Vitae aesthetic)
 - [x] Design philosophy: `design/aureum_vitae_philosophy.md`
-- [ ] App icon (M17)
-- [ ] App Store screenshots (v1.0)
+- [x] App icon: `Assets.xcassets/AppIcon.appiconset/icon_1024.png` (M17)
+- [x] App Store screenshots: `design/screenshots/` (5 screenshots, 1290x2796px)
+- [x] App Store metadata: `design/appstore_metadata.md`
+- [x] Privacy policy: `design/privacy_policy.md`
 
 ---
 

@@ -6,6 +6,7 @@ final class Meal {
     @Attribute(.externalStorage) var photoData: Data?
     var foodItems: [FoodItem]
     var totalCalories: Double
+    #Index<Meal>([\.timestamp])
     var timestamp: Date
     var notes: String?
     var cuisineType: String?

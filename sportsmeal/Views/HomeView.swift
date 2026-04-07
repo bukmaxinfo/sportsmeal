@@ -111,6 +111,8 @@ struct HomeView: View {
         }
         .frame(maxWidth: .infinity)
         .luxuryCard(padding: 24)
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("Today's intake: \(Int(totalCalories)) of \(Int(target)) kilocalories")
     }
 
     // MARK: - Macro Rings
@@ -140,6 +142,10 @@ struct HomeView: View {
         }
         .frame(maxWidth: .infinity)
         .luxuryCard()
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(hasMacroData
+            ? "Macros: \(Int(todayProtein)) grams protein, \(Int(todayCarbs)) grams carbs, \(Int(todayFat)) grams fat"
+            : "Macros: scan a meal to see breakdown")
     }
 
     private func macroRing(label: String, current: Double, target: Double, color: Color) -> some View {

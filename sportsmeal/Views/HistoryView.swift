@@ -115,6 +115,7 @@ struct HistoryView: View {
                         .foregroundStyle(AppTheme.goldGradient)
                         .cornerRadius(4)
                     }
+                    .accessibilityLabel("Daily calories over the last 7 days")
                     .chartYAxis {
                         AxisMarks { value in
                             AxisGridLine(stroke: StrokeStyle(lineWidth: 0.5))
@@ -146,6 +147,7 @@ struct HistoryView: View {
                         .foregroundStyle(AppTheme.positive)
                         .cornerRadius(4)
                     }
+                    .accessibilityLabel("Meals per day over the last 7 days")
                     .chartYAxis {
                         AxisMarks { value in
                             AxisGridLine(stroke: StrokeStyle(lineWidth: 0.5))

@@ -16,6 +16,7 @@ struct CameraView: View {
     @State private var selectedCuisine = ""
     @State private var showOptions = false
     @State private var showQuickLog = false
+    @State private var analysisTask: Task<Void, Never>?
 
     private let service = CalorieEstimationService()
 
@@ -72,6 +73,7 @@ struct CameraView: View {
                 }
                 .background(AppTheme.background)
                 .navigationTitle("Scan Meal")
+                .onDisappear { analysisTask?.cancel() }
                 .toolbar {
                     ToolbarItem(placement: .primaryAction) {
                         NavigationLink {
@@ -323,7 +325,7 @@ struct CameraView: View {
 
             // Analyze button
             Button {
-                Task { await analyzeCurrentPhoto() }
+                analysisTask = Task { await analyzeCurrentPhoto() }
             } label: {
                 Label("Analyze Meal", systemImage: "sparkles")
                     .luxuryButton()

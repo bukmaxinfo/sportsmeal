@@ -155,14 +155,12 @@ struct MenuScannerView: View {
 
             // Legend
             HStack(spacing: 16) {
-                HStack(spacing: 4) {
-                    Circle().fill(AppTheme.positive).frame(width: 8, height: 8)
-                    Text("Fits your budget").font(.caption2).foregroundStyle(AppTheme.textTertiary)
-                }
-                HStack(spacing: 4) {
-                    Circle().fill(AppTheme.negative).frame(width: 8, height: 8)
-                    Text("Over budget").font(.caption2).foregroundStyle(AppTheme.textTertiary)
-                }
+                Label("Fits your budget", systemImage: "checkmark.circle.fill")
+                    .font(.caption2)
+                    .foregroundStyle(AppTheme.positive)
+                Label("Over budget", systemImage: "xmark.circle.fill")
+                    .font(.caption2)
+                    .foregroundStyle(AppTheme.negative)
             }
         }
     }
