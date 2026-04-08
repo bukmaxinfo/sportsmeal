@@ -316,7 +316,7 @@ struct CameraView: View {
                 Text("Notes (optional)")
                     .font(.caption.weight(.semibold))
                     .foregroundStyle(AppTheme.textSecondary)
-                TextField("e.g., shared plate, extra sauce, half eaten", text: $mealNotes)
+                TextField("e.g., 外卖/少油/shared plate/half eaten", text: $mealNotes)
                     .font(.subheadline)
                     .padding(10)
                     .background(AppTheme.surfaceLight)

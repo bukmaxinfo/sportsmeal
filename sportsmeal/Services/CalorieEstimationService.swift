@@ -112,7 +112,20 @@ actor CalorieEstimationService {
         }
 
         if let notes = notes, !notes.isEmpty {
-            prompt += "Additional context from the user: \"\(notes)\"\n\n"
+            prompt += """
+            The user provided this note about the meal: "\(notes)"
+            USE THIS NOTE to adjust your calorie estimate. Common notes and how to handle them:
+            • "shared plate" / "split with 2 people" → estimate the full dish then divide
+            • "extra oil" / "油多" → add 100-200 kcal to account for additional cooking oil
+            • "light oil" / "少油" / "清淡" → reduce oil estimate by 50%
+            • "half eaten" / "吃了一半" → estimate what's visible (the remaining portion)
+            • "takeout" / "外卖" → restaurant portions, typically 20-30% more than home cooking
+            • "homemade" / "自己做的" → typically less oil than restaurant, reduce by 15-20%
+            • "no rice" / "没吃饭" → don't include rice even if you see it in the photo
+            • Specific ingredients mentioned → use them to identify the dish more accurately
+            • Cooking method mentioned (蒸/炸/煮/烤) → adjust oil/fat estimates accordingly
+
+            """
         }
 
         if portionMultiplier != 1.0 {
