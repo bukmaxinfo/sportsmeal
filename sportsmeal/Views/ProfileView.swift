@@ -153,6 +153,16 @@ struct ProfileDetailView: View {
 
             Section("Settings") {
                 NavigationLink {
+                    LanguageSettingsView()
+                } label: {
+                    HStack {
+                        Label("Language", systemImage: "globe")
+                        Spacer()
+                        Text(LanguageManager.shared.currentLanguageName)
+                            .foregroundStyle(AppTheme.textTertiary)
+                    }
+                }
+                NavigationLink {
                     HealthView()
                 } label: {
                     Label("Apple Health", systemImage: "heart.fill")
