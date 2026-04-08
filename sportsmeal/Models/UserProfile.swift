@@ -65,7 +65,7 @@ enum DietType: String, Codable, CaseIterable, Identifiable {
 @Model
 final class UserProfile {
     var name: String = ""
-    var age: Int = 25
+    var dateOfBirth: Date = Calendar.current.date(byAdding: .year, value: -25, to: Date()) ?? Date()
     var heightCm: Double = 170
     var weightKg: Double = 70
     var sex: Sex = Sex.male
@@ -76,9 +76,13 @@ final class UserProfile {
     var createdAt: Date = Date()
     var updatedAt: Date = Date()
 
+    var age: Int {
+        Calendar.current.dateComponents([.year], from: dateOfBirth, to: Date()).year ?? 25
+    }
+
     init(
         name: String = "",
-        age: Int = 25,
+        dateOfBirth: Date? = nil,
         heightCm: Double = 170,
         weightKg: Double = 70,
         sex: Sex = .male,
@@ -88,7 +92,7 @@ final class UserProfile {
         dietaryRestrictions: [String]? = nil
     ) {
         self.name = name
-        self.age = age
+        self.dateOfBirth = dateOfBirth ?? Calendar.current.date(byAdding: .year, value: -25, to: Date()) ?? Date()
         self.heightCm = heightCm
         self.weightKg = weightKg
         self.sex = sex

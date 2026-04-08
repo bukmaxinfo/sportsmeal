@@ -5,7 +5,7 @@ struct OnboardingView: View {
     @Environment(\.modelContext) private var modelContext
     @State private var currentStep = 0
     @State private var name = ""
-    @State private var age = 25
+    @State private var dateOfBirth = Calendar.current.date(byAdding: .year, value: -25, to: Date()) ?? Date()
     @State private var heightCm = 170.0
     @State private var weightKg = 70.0
     @State private var sex: Sex = .male
@@ -127,9 +127,13 @@ struct OnboardingView: View {
                     }
                 }
 
-                onboardingField(label: "Age", value: "\(age)") {
-                    Stepper("", value: $age, in: 10...120)
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("Date of Birth")
+                        .foregroundStyle(AppTheme.textSecondary)
+                    DatePicker("", selection: $dateOfBirth, in: ...Date(), displayedComponents: .date)
+                        .datePickerStyle(.compact)
                         .labelsHidden()
+                        .tint(AppTheme.gold)
                 }
 
                 onboardingField(label: "Height", value: "") {
@@ -242,9 +246,10 @@ struct OnboardingView: View {
             // Stats preview
             let heightM = heightCm / 100
             let previewBMI = heightM > 0 ? weightKg / (heightM * heightM) : 0
+            let computedAge = Calendar.current.dateComponents([.year], from: dateOfBirth, to: Date()).year ?? 25
             let previewBMR = sex == .male
-                ? 10 * weightKg + 6.25 * heightCm - 5 * Double(age) + 5
-                : 10 * weightKg + 6.25 * heightCm - 5 * Double(age) - 161
+                ? 10 * weightKg + 6.25 * heightCm - 5 * Double(computedAge) + 5
+                : 10 * weightKg + 6.25 * heightCm - 5 * Double(computedAge) - 161
 
             HStack(spacing: 16) {
                 previewStat(label: "BMI", value: String(format: "%.1f", previewBMI))
@@ -372,7 +377,7 @@ struct OnboardingView: View {
     private func saveProfile() {
         let profile = UserProfile(
             name: name,
-            age: age,
+            dateOfBirth: dateOfBirth,
             heightCm: heightCm,
             weightKg: weightKg,
             sex: sex,

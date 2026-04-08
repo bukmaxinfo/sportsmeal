@@ -33,7 +33,7 @@ struct ProfileDetailView: View {
             Section("Personal Info") {
                 if isEditing {
                     TextField("Name", text: $profile.name)
-                    Stepper("Age: \(profile.age)", value: $profile.age, in: 10...120)
+                    DatePicker("Date of Birth", selection: $profile.dateOfBirth, in: ...Date(), displayedComponents: .date)
                     HStack {
                         Text("Height")
                         Spacer()
@@ -70,7 +70,7 @@ struct ProfileDetailView: View {
                     }
                 } else {
                     LabeledContent("Name", value: profile.name)
-                    LabeledContent("Age", value: "\(profile.age)")
+                    LabeledContent("Age", value: "\(profile.age) years old")
                     LabeledContent("Height", value: String(format: "%.0f cm", profile.heightCm))
                     LabeledContent("Weight", value: String(format: "%.1f kg", profile.weightKg))
                     LabeledContent("Sex", value: profile.sex.rawValue)
