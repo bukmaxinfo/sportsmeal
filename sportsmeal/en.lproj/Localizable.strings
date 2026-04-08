@@ -258,3 +258,62 @@
 "NORMAL" = "NORMAL";
 "ACTIVE" = "ACTIVE";
 "KCAL" = "KCAL";
+
+/* Health Score */
+"Health Score" = "Health Score";
+"Unhealthy" = "Unhealthy";
+"Below Average" = "Below Average";
+"Decent" = "Decent";
+"Healthy" = "Healthy";
+"Excellent" = "Excellent";
+
+/* Streak */
+"%lld day streak" = "%lld day streak";
+"You're on fire! Keep it going." = "You're on fire! Keep it going.";
+"Keep logging to build your streak!" = "Keep logging to build your streak!";
+
+/* Auth */
+"Sign in with Apple" = "Sign in with Apple";
+"AI-powered nutrition for athletes" = "AI-powered nutrition for athletes";
+"Snap to Track" = "Snap to Track";
+"Photograph any meal for instant AI analysis" = "Photograph any meal for instant AI analysis";
+"Smart Macros" = "Smart Macros";
+"Personalised targets based on your body & goals" = "Personalised targets based on your body & goals";
+"Private Cloud Sync" = "Private Cloud Sync";
+"Your data lives in your own iCloud — never sold" = "Your data lives in your own iCloud — never sold";
+"Your data is stored privately in your own iCloud account.\nWe never see or sell your information." = "Your data is stored privately in your own iCloud account.\nWe never see or sell your information.";
+"Apple Sign-In failed. Please try again." = "Apple Sign-In failed. Please try again.";
+
+/* Profile - DOB */
+"Date of Birth" = "Date of Birth";
+"years old" = "years old";
+
+/* API Usage */
+"API Usage" = "API Usage";
+"Session Usage" = "Session Usage";
+"Total Requests" = "Total Requests";
+"Vision (Photo) Requests" = "Vision (Photo) Requests";
+"Text Requests" = "Text Requests";
+"Est. Tokens Used" = "Est. Tokens Used";
+"Cost Estimate" = "Cost Estimate";
+"Optimization" = "Optimization";
+"Response Cache" = "Response Cache";
+"Image Compression" = "Image Compression";
+"Clear Cache" = "Clear Cache";
+
+/* HealthKit Workouts */
+"via %@" = "via %@";
+
+/* Exercise Types from HealthKit */
+"Weight Training" = "Weight Training";
+"Yoga" = "Yoga";
+"HIIT" = "HIIT";
+"Dancing" = "Dancing";
+"Hiking" = "Hiking";
+"Elliptical" = "Elliptical";
+"Stairs" = "Stairs";
+"Strength" = "Strength";
+"Core" = "Core";
+"Stretching" = "Stretching";
+"Cardio" = "Cardio";
+"Workout" = "Workout";

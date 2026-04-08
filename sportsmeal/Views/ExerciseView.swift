@@ -292,7 +292,7 @@ struct ExerciseView: View {
                                 Text("\(workout.durationMinutes) min")
                                     .font(.caption)
                                     .foregroundStyle(AppTheme.textSecondary)
-                                Text("via \(workout.source)")
+                                Text("via \(workout.source)", comment: "Workout source")
                                     .font(.caption)
                                     .foregroundStyle(AppTheme.textTertiary)
                             }

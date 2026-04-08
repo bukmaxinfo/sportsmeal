@@ -262,3 +262,62 @@
 "NORMAL" = "正常";
 "ACTIVE" = "活跃";
 "KCAL" = "千卡";
+
+/* Health Score */
+"Health Score" = "健康评分";
+"Unhealthy" = "不健康";
+"Below Average" = "偏差";
+"Decent" = "一般";
+"Healthy" = "健康";
+"Excellent" = "优秀";
+
+/* Streak */
+"%lld day streak" = "连续打卡 %lld 天";
+"You're on fire! Keep it going." = "太棒了！继续保持！";
+"Keep logging to build your streak!" = "坚持记录，保持连续打卡！";
+
+/* Auth */
+"Sign in with Apple" = "通过 Apple 登录";
+"AI-powered nutrition for athletes" = "AI 驱动的运动营养助手";
+"Snap to Track" = "拍照记录";
+"Photograph any meal for instant AI analysis" = "拍摄任意餐食，AI 即时分析";
+"Smart Macros" = "智能营养素";
+"Personalised targets based on your body & goals" = "根据你的身体数据和目标定制";
+"Private Cloud Sync" = "私有云同步";
+"Your data lives in your own iCloud — never sold" = "数据存在你自己的 iCloud——绝不出售";
+"Your data is stored privately in your own iCloud account.\nWe never see or sell your information." = "你的数据私密存储在你的 iCloud 账户中。\n我们绝不查看或出售你的信息。";
+"Apple Sign-In failed. Please try again." = "Apple 登录失败，请重试。";
+
+/* Profile - DOB */
+"Date of Birth" = "出生日期";
+"years old" = "岁";
+
+/* API Usage */
+"API Usage" = "API 用量";
+"Session Usage" = "本次用量";
+"Total Requests" = "总请求数";
+"Vision (Photo) Requests" = "图片请求";
+"Text Requests" = "文本请求";
+"Est. Tokens Used" = "预估 Token 用量";
+"Cost Estimate" = "费用估算";
+"Optimization" = "优化";
+"Response Cache" = "响应缓存";
+"Image Compression" = "图片压缩";
+"Clear Cache" = "清除缓存";
+
+/* HealthKit Workouts */
+"via %@" = "来自 %@";
+
+/* Exercise Types from HealthKit */
+"Weight Training" = "力量训练";
+"Yoga" = "瑜伽";
+"HIIT" = "高强度间歇";
+"Dancing" = "舞蹈";
+"Hiking" = "徒步";
+"Elliptical" = "椭圆机";
+"Stairs" = "爬楼";
+"Strength" = "力量";
+"Core" = "核心";
+"Stretching" = "拉伸";
+"Cardio" = "有氧";
+"Workout" = "锻炼";

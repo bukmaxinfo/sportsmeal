@@ -504,11 +504,11 @@ struct HealthScoreBar: View {
 
     private var scoreLabel: String {
         switch score {
-        case 1...3: return "Unhealthy"
-        case 4...5: return "Below Average"
-        case 6...7: return "Decent"
-        case 8...9: return "Healthy"
-        case 10: return "Excellent"
+        case 1...3: return String(localized: "Unhealthy")
+        case 4...5: return String(localized: "Below Average")
+        case 6...7: return String(localized: "Decent")
+        case 8...9: return String(localized: "Healthy")
+        case 10: return String(localized: "Excellent")
         default: return ""
         }
     }

@@ -187,10 +187,12 @@ struct HomeView: View {
                     .font(.title2)
                     .foregroundStyle(streak >= 7 ? AppTheme.gold : AppTheme.warning)
                 VStack(alignment: .leading, spacing: 2) {
-                    Text("\(streak) day streak")
+                    Text("\(streak) day streak", comment: "Streak count")
                         .font(.subheadline.weight(.semibold))
                         .foregroundStyle(AppTheme.textPrimary)
-                    Text(streak >= 7 ? "You're on fire! Keep it going." : "Keep logging to build your streak!")
+                    Text(streak >= 7
+                         ? String(localized: "You're on fire! Keep it going.")
+                         : String(localized: "Keep logging to build your streak!"))
                         .font(.caption)
                         .foregroundStyle(AppTheme.textTertiary)
                 }
