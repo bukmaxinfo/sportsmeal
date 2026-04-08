@@ -205,6 +205,10 @@ struct CameraView: View {
                         MacroPill(label: "Fat", value: totalF, color: AppTheme.warning)
                     }
                 }
+
+                if let score = result.healthScore {
+                    HealthScoreBar(score: score)
+                }
             }
             .frame(maxWidth: .infinity)
             .luxuryCard(padding: 20)
@@ -481,6 +485,66 @@ struct CameraView: View {
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
             showingSaveConfirmation = false
         }
+    }
+}
+
+// MARK: - Health Score Bar
+struct HealthScoreBar: View {
+    let score: Int
+
+    private var scoreColor: Color {
+        switch score {
+        case 1...3: return AppTheme.negative
+        case 4...5: return AppTheme.warning
+        case 6...7: return AppTheme.gold
+        case 8...10: return AppTheme.positive
+        default: return AppTheme.textTertiary
+        }
+    }
+
+    private var scoreLabel: String {
+        switch score {
+        case 1...3: return "Unhealthy"
+        case 4...5: return "Below Average"
+        case 6...7: return "Decent"
+        case 8...9: return "Healthy"
+        case 10: return "Excellent"
+        default: return ""
+        }
+    }
+
+    var body: some View {
+        VStack(spacing: 6) {
+            HStack {
+                Image(systemName: "heart.fill")
+                    .foregroundStyle(scoreColor)
+                Text("Health Score")
+                    .font(.caption.weight(.semibold))
+                    .foregroundStyle(AppTheme.textSecondary)
+                Spacer()
+                Text("\(score) / 10")
+                    .font(.caption.bold())
+                    .foregroundStyle(scoreColor)
+            }
+
+            GeometryReader { geo in
+                ZStack(alignment: .leading) {
+                    RoundedRectangle(cornerRadius: 4)
+                        .fill(AppTheme.surfaceLight)
+                        .frame(height: 6)
+                    RoundedRectangle(cornerRadius: 4)
+                        .fill(scoreColor)
+                        .frame(width: geo.size.width * CGFloat(score) / 10.0, height: 6)
+                }
+            }
+            .frame(height: 6)
+
+            Text(scoreLabel)
+                .font(.system(size: 10))
+                .foregroundStyle(AppTheme.textTertiary)
+        }
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("Health score: \(score) out of 10, \(scoreLabel)")
     }
 }
 

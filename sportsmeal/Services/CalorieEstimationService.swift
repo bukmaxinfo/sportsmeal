@@ -4,6 +4,12 @@ import UIKit
 struct CalorieEstimationResult: Codable {
     let foods: [EstimatedFood]
     let totalCalories: Double
+    let healthScore: Int?
+
+    enum CodingKeys: String, CodingKey {
+        case foods, totalCalories
+        case healthScore = "health_score"
+    }
 }
 
 struct EstimatedFood: Codable {
@@ -42,7 +48,8 @@ actor CalorieEstimationService {
                         fatGrams: food.fatGrams.map { $0 * portionMultiplier }
                     )
                 },
-                totalCalories: result.totalCalories * portionMultiplier
+                totalCalories: result.totalCalories * portionMultiplier,
+                healthScore: result.healthScore
             )
         }
 
@@ -136,17 +143,37 @@ actor CalorieEstimationService {
         Respond ONLY with valid JSON in this exact format (no markdown, no explanation):
         {
           "foods": [
-            {"name": "food name", "calories": 250, "portionSize": "1 serving / 200g / 1 piece", "protein_g": 20.0, "carbs_g": 30.0, "fat_g": 8.0}
+            {"name": "煎荷包蛋", "calories": 93, "portionSize": "50g", "protein_g": 6.5, "carbs_g": 0.5, "fat_g": 7.0}
           ],
-          "totalCalories": 500
+          "totalCalories": 1816,
+          "health_score": 4
         }
 
-        IMPORTANT RULES:
-        - Estimate the VISIBLE portion in the photo, not a textbook serving size.
-        - Always account for cooking oil, sauces, and hidden fats — these are the #1 source of underestimation.
-        - For each food item, estimate protein, carbs, and fat in grams.
-        - Use grams or common units (碗/个/片/串) for portionSize.
-        - If you can't identify a food, give your best guess based on appearance.
+        CRITICAL RULES — follow these exactly:
+
+        1. DECOMPOSE composite dishes into individual components. Do NOT return "螺蛳粉" as one item. Instead break it down:
+           - 螺蛳粉汤底 180大卡 400ml
+           - 煎荷包蛋 93大卡 50g
+           - 炸腐竹 94大卡 20g
+           - 煎香肠 130大卡 40g
+           - 花生 227大卡 40g
+           - 酸笋 6大卡 30g
+           Similarly: 麻辣烫 → list each ingredient. 盖浇饭 → rice + topping separately. 面条 → noodles + broth + toppings separately.
+
+        2. INCLUDE COOKING METHOD in the food name. Say "煎荷包蛋" not "荷包蛋", "炸腐竹" not "腐竹", "烤鸡翅" not "鸡翅". The cooking method changes the calories significantly.
+
+        3. USE SPECIFIC GRAM WEIGHTS in portionSize. Say "50g" or "400ml", not "1 serving" or "1 portion". Estimate the actual weight in grams based on what you see.
+
+        4. health_score: Rate the meal 1-10 for overall nutritional quality:
+           - 1-3: Very unhealthy (deep fried, high sugar, processed, excessive oil)
+           - 4-5: Below average (too much fat/carbs, lacking protein or vegetables)
+           - 6-7: Decent (balanced but room for improvement)
+           - 8-9: Healthy (good protein, vegetables, moderate calories)
+           - 10: Excellent (lean protein, lots of vegetables, whole grains, minimal oil)
+
+        5. Always account for cooking oil, sauces, and hidden fats.
+        6. Estimate the VISIBLE portion, not a textbook serving.
+        7. If you can't identify a food, give your best guess.
         """
 
         return prompt
