@@ -10,6 +10,8 @@ import SwiftData
 
 @main
 struct sportsmealApp: App {
+    @State private var authService = AuthService()
+
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
             UserProfile.self,
@@ -30,6 +32,7 @@ struct sportsmealApp: App {
     var body: some Scene {
         WindowGroup {
             RootView()
+                .environment(authService)
                 .preferredColorScheme(.dark)
                 .tint(AppTheme.gold)
         }
@@ -38,16 +41,47 @@ struct sportsmealApp: App {
 }
 
 struct RootView: View {
+    @Environment(AuthService.self) private var authService
     @Query private var profiles: [UserProfile]
     @AppStorage("hasCompletedOnboarding") private var hasCompletedOnboarding = false
 
     var body: some View {
-        if profiles.isEmpty && !hasCompletedOnboarding {
-            OnboardingView {
-                hasCompletedOnboarding = true
+        Group {
+            switch authService.authState {
+            case .checking:
+                splashView
+            case .unauthenticated:
+                LoginView()
+            case .authenticated:
+                if profiles.isEmpty && !hasCompletedOnboarding {
+                    OnboardingView {
+                        hasCompletedOnboarding = true
+                    }
+                } else {
+                    MainTabView()
+                }
             }
-        } else {
-            MainTabView()
+        }
+        .task {
+            await authService.checkExistingSession()
+        }
+    }
+
+    private var splashView: some View {
+        ZStack {
+            AppTheme.background.ignoresSafeArea()
+            VStack(spacing: 20) {
+                ZStack {
+                    Circle()
+                        .fill(AppTheme.goldSubtle)
+                        .frame(width: 90, height: 90)
+                    Image(systemName: "fork.knife.circle.fill")
+                        .font(.system(size: 48))
+                        .foregroundStyle(AppTheme.gold)
+                }
+                ProgressView()
+                    .tint(AppTheme.gold)
+            }
         }
     }
 }

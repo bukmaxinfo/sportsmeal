@@ -49,9 +49,9 @@ enum ExerciseType: String, Codable, CaseIterable, Identifiable {
 
 @Model
 final class ExerciseEntry {
-    var type: ExerciseType
-    var durationMinutes: Int
-    var timestamp: Date
+    var type: ExerciseType = ExerciseType.running
+    var durationMinutes: Int = 30
+    var timestamp: Date = Date()
 
     init(type: ExerciseType = .running, durationMinutes: Int = 30, timestamp: Date = Date()) {
         self.type = type

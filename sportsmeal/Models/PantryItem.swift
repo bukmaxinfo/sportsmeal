@@ -31,12 +31,12 @@ enum IngredientCategory: String, Codable, CaseIterable, Identifiable {
 
 @Model
 final class PantryItem {
-    var name: String
-    var category: IngredientCategory
-    var quantity: String
-    var addedDate: Date
+    var name: String = ""
+    var category: IngredientCategory = IngredientCategory.other
+    var quantity: String = ""
+    var addedDate: Date = Date()
     var expirationDate: Date?
-    var isAvailable: Bool
+    var isAvailable: Bool = true
 
     init(
         name: String,

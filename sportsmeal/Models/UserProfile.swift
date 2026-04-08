@@ -64,17 +64,17 @@ enum DietType: String, Codable, CaseIterable, Identifiable {
 
 @Model
 final class UserProfile {
-    var name: String
-    var age: Int
-    var heightCm: Double
-    var weightKg: Double
-    var sex: Sex
-    var activityLevel: ActivityLevel
+    var name: String = ""
+    var age: Int = 25
+    var heightCm: Double = 170
+    var weightKg: Double = 70
+    var sex: Sex = Sex.male
+    var activityLevel: ActivityLevel = ActivityLevel.moderate
     var goalWeightKg: Double?
     var dietType: DietType?
     var dietaryRestrictions: [String]?
-    var createdAt: Date
-    var updatedAt: Date
+    var createdAt: Date = Date()
+    var updatedAt: Date = Date()
 
     init(
         name: String = "",

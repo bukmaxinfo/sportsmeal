@@ -4,10 +4,9 @@ import SwiftData
 @Model
 final class Meal {
     @Attribute(.externalStorage) var photoData: Data?
-    var foodItems: [FoodItem]
-    var totalCalories: Double
-    #Index<Meal>([\.timestamp])
-    var timestamp: Date
+    var foodItems: [FoodItem] = []
+    var totalCalories: Double = 0
+    var timestamp: Date = Date()
     var notes: String?
     var cuisineType: String?
     var portionMultiplier: Double?

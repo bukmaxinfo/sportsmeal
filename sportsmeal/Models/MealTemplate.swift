@@ -3,15 +3,15 @@ import SwiftData
 
 @Model
 final class MealTemplate {
-    var name: String
-    var foodItems: [FoodItem]
-    var totalCalories: Double
-    var totalProtein: Double
-    var totalCarbs: Double
-    var totalFat: Double
-    var useCount: Int
+    var name: String = ""
+    var foodItems: [FoodItem] = []
+    var totalCalories: Double = 0
+    var totalProtein: Double = 0
+    var totalCarbs: Double = 0
+    var totalFat: Double = 0
+    var useCount: Int = 0
     var lastUsed: Date?
-    var createdAt: Date
+    var createdAt: Date = Date()
 
     init(
         name: String,
