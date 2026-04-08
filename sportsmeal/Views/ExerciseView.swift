@@ -7,6 +7,7 @@ struct ExerciseView: View {
     @Environment(\.modelContext) private var modelContext
 
     @State private var showingAddSheet = false
+    @StateObject private var healthKit = HealthKitService()
 
     private var profile: UserProfile? { profiles.first }
 
@@ -275,7 +276,41 @@ struct ExerciseView: View {
                 .font(.headline)
                 .foregroundStyle(AppTheme.textPrimary)
 
-            if todayExercises.isEmpty {
+            // HealthKit imported workouts (Apple Watch, Strava, etc.)
+            if !healthKit.todayWorkouts.isEmpty {
+                ForEach(healthKit.todayWorkouts) { workout in
+                    HStack(spacing: 12) {
+                        Image(systemName: workout.icon)
+                            .font(.title3)
+                            .foregroundStyle(AppTheme.positive)
+                            .frame(width: 32)
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text(workout.name)
+                                .font(.subheadline.weight(.semibold))
+                                .foregroundStyle(AppTheme.textPrimary)
+                            HStack(spacing: 8) {
+                                Text("\(workout.durationMinutes) min")
+                                    .font(.caption)
+                                    .foregroundStyle(AppTheme.textSecondary)
+                                Text("via \(workout.source)")
+                                    .font(.caption)
+                                    .foregroundStyle(AppTheme.textTertiary)
+                            }
+                        }
+                        Spacer()
+                        Text("\(Int(workout.caloriesBurned))")
+                            .font(.subheadline.bold())
+                            .foregroundStyle(AppTheme.positive)
+                        + Text(" kcal")
+                            .font(.caption)
+                            .foregroundStyle(AppTheme.textTertiary)
+                    }
+                    .luxuryCard()
+                }
+            }
+
+            // Manually logged exercises
+            if todayExercises.isEmpty && healthKit.todayWorkouts.isEmpty {
                 HStack {
                     Image(systemName: "figure.run")
                         .foregroundStyle(AppTheme.textTertiary)
@@ -289,6 +324,11 @@ struct ExerciseView: View {
                 ForEach(todayExercises) { entry in
                     exerciseRow(entry)
                 }
+            }
+        }
+        .onAppear {
+            if healthKit.isAuthorized {
+                healthKit.fetchTodayWorkouts()
             }
         }
     }

@@ -1,6 +1,17 @@
 import Foundation
 import HealthKit
 
+struct HealthWorkout: Identifiable {
+    let id = UUID()
+    let activityType: HKWorkoutActivityType
+    let name: String
+    let icon: String
+    let durationMinutes: Int
+    let caloriesBurned: Double
+    let startDate: Date
+    let source: String  // e.g., "Apple Watch", "Strava", "Nike Run Club"
+}
+
 class HealthKitService: ObservableObject {
 
     // MARK: - Published state
@@ -9,6 +20,7 @@ class HealthKitService: ObservableObject {
     @Published var latestWeight: Double?      // kg
     @Published var todaySteps: Int?
     @Published var todayActiveCalories: Double?
+    @Published var todayWorkouts: [HealthWorkout] = []
 
     // MARK: - Private
 
@@ -26,7 +38,7 @@ class HealthKitService: ObservableObject {
             let steps = HKQuantityType.quantityType(forIdentifier: .stepCount),
             let activeEnergy = HKQuantityType.quantityType(forIdentifier: .activeEnergyBurned)
         else { return [] }
-        return [bodyMass, steps, activeEnergy]
+        return [bodyMass, steps, activeEnergy, HKWorkoutType.workoutType()]
     }
 
     private var writeTypes: Set<HKSampleType> {
@@ -52,6 +64,7 @@ class HealthKitService: ObservableObject {
                     self?.fetchLatestWeight()
                     self?.fetchTodaySteps()
                     self?.fetchTodayActiveCalories()
+                    self?.fetchTodayWorkouts()
                 } else {
                     self?.isAuthorized = false
                 }
@@ -126,6 +139,79 @@ class HealthKitService: ObservableObject {
             }
         }
         healthStore.execute(query)
+    }
+
+    // MARK: - Fetch today's workouts from Apple Watch / Health
+
+    func fetchTodayWorkouts() {
+        guard isAvailable else { return }
+
+        let predicate = predicateForToday()
+        let sortDescriptor = NSSortDescriptor(key: HKSampleSortIdentifierStartDate, ascending: false)
+
+        let query = HKSampleQuery(
+            sampleType: HKWorkoutType.workoutType(),
+            predicate: predicate,
+            limit: HKObjectQueryNoLimit,
+            sortDescriptors: [sortDescriptor]
+        ) { [weak self] _, samples, _ in
+            guard let workouts = samples as? [HKWorkout] else { return }
+
+            let mapped = workouts.map { workout in
+                HealthWorkout(
+                    activityType: workout.workoutActivityType,
+                    name: Self.workoutName(for: workout.workoutActivityType),
+                    icon: Self.workoutIcon(for: workout.workoutActivityType),
+                    durationMinutes: Int(workout.duration / 60),
+                    caloriesBurned: workout.totalEnergyBurned?.doubleValue(for: .kilocalorie()) ?? 0,
+                    startDate: workout.startDate,
+                    source: workout.sourceRevision.source.name
+                )
+            }
+
+            DispatchQueue.main.async {
+                self?.todayWorkouts = mapped
+            }
+        }
+        healthStore.execute(query)
+    }
+
+    private static func workoutName(for type: HKWorkoutActivityType) -> String {
+        switch type {
+        case .running:                       return "Running"
+        case .walking:                       return "Walking"
+        case .cycling:                       return "Cycling"
+        case .swimming:                      return "Swimming"
+        case .traditionalStrengthTraining:   return "Weight Training"
+        case .yoga:                          return "Yoga"
+        case .highIntensityIntervalTraining: return "HIIT"
+        case .dance:                         return "Dancing"
+        case .hiking:                        return "Hiking"
+        case .elliptical:                    return "Elliptical"
+        case .stairClimbing:                 return "Stairs"
+        case .functionalStrengthTraining:    return "Strength"
+        case .coreTraining:                  return "Core"
+        case .flexibility:                   return "Stretching"
+        case .mixedCardio:                   return "Cardio"
+        default:                             return "Workout"
+        }
+    }
+
+    private static func workoutIcon(for type: HKWorkoutActivityType) -> String {
+        switch type {
+        case .running:                       return "figure.run"
+        case .walking:                       return "figure.walk"
+        case .cycling:                       return "bicycle"
+        case .swimming:                      return "figure.pool.swim"
+        case .traditionalStrengthTraining:   return "dumbbell.fill"
+        case .yoga:                          return "figure.mind.and.body"
+        case .highIntensityIntervalTraining: return "bolt.heart.fill"
+        case .dance:                         return "figure.dance"
+        case .hiking:                        return "figure.hiking"
+        case .elliptical:                    return "figure.elliptical"
+        case .stairClimbing:                 return "figure.stairs"
+        default:                             return "figure.mixed.cardio"
+        }
     }
 
     // MARK: - Save meal calories
