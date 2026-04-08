@@ -11,7 +11,7 @@ struct CameraView: View {
     @State private var isAnalyzing = false
     @State private var errorMessage: String?
     @State private var showingSaveConfirmation = false
-    @State private var portionMultiplier = 1.0
+    @State private var portionPercent = 100.0
     @State private var mealNotes = ""
     @State private var selectedCuisine = ""
     @State private var showOptions = false
@@ -20,9 +20,7 @@ struct CameraView: View {
 
     private let service = CalorieEstimationService()
 
-    private let portionOptions: [(String, Double)] = [
-        ("0.5x", 0.5), ("1x", 1.0), ("1.5x", 1.5), ("2x", 2.0), ("3x", 3.0)
-    ]
+    private let portionPresets: [Int] = [25, 50, 75, 100]
 
     private let cuisineOptions = ["", "Chinese", "Japanese", "Korean", "Indian", "Thai", "Mexican", "Italian", "American", "Mediterranean", "Other"]
 
@@ -268,22 +266,32 @@ struct CameraView: View {
     // MARK: - Meal Options
     private var mealOptionsPanel: some View {
         VStack(spacing: 14) {
-            // Portion picker
-            VStack(alignment: .leading, spacing: 6) {
-                Text("Portion Size")
-                    .font(.caption.weight(.semibold))
-                    .foregroundStyle(AppTheme.textSecondary)
+            // How much did you eat?
+            VStack(alignment: .leading, spacing: 8) {
+                HStack {
+                    Text("How much did you eat?")
+                        .font(.caption.weight(.semibold))
+                        .foregroundStyle(AppTheme.textSecondary)
+                    Spacer()
+                    Text("\(Int(portionPercent))%")
+                        .font(.subheadline.bold())
+                        .foregroundStyle(AppTheme.gold)
+                }
+
+                Slider(value: $portionPercent, in: 5...100, step: 5)
+                    .tint(AppTheme.gold)
+
                 HStack(spacing: 8) {
-                    ForEach(portionOptions, id: \.1) { label, value in
+                    ForEach(portionPresets, id: \.self) { pct in
                         Button {
-                            portionMultiplier = value
+                            portionPercent = Double(pct)
                         } label: {
-                            Text(label)
-                                .font(.subheadline.weight(.semibold))
+                            Text("\(pct)%")
+                                .font(.caption.weight(.semibold))
                                 .frame(maxWidth: .infinity)
-                                .padding(.vertical, 8)
-                                .background(portionMultiplier == value ? AppTheme.gold : AppTheme.surfaceLight)
-                                .foregroundStyle(portionMultiplier == value ? .black : AppTheme.textSecondary)
+                                .padding(.vertical, 6)
+                                .background(Int(portionPercent) == pct ? AppTheme.gold : AppTheme.surfaceLight)
+                                .foregroundStyle(Int(portionPercent) == pct ? .black : AppTheme.textSecondary)
                                 .clipShape(RoundedRectangle(cornerRadius: 8))
                         }
                     }
@@ -345,7 +353,7 @@ struct CameraView: View {
         estimationResult = nil
         showingSaveConfirmation = false
         // Reset options for new photo
-        portionMultiplier = 1.0
+        portionPercent = 100.0
         mealNotes = ""
         selectedCuisine = ""
 
@@ -369,7 +377,7 @@ struct CameraView: View {
         do {
             let result = try await service.estimateCalories(
                 from: image,
-                portionMultiplier: portionMultiplier,
+                portionMultiplier: portionPercent / 100.0,
                 notes: mealNotes.isEmpty ? nil : mealNotes,
                 cuisine: selectedCuisine.isEmpty ? nil : selectedCuisine
             )
@@ -392,7 +400,7 @@ struct CameraView: View {
             timestamp: Date(),
             notes: mealNotes,
             cuisineType: selectedCuisine,
-            portionMultiplier: portionMultiplier
+            portionMultiplier: portionPercent / 100.0
         )
         modelContext.insert(meal)
         withAnimation { showingSaveConfirmation = true }

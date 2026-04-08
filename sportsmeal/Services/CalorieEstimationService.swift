@@ -153,7 +153,8 @@ actor CalorieEstimationService {
         }
 
         if portionMultiplier != 1.0 {
-            prompt += "The user indicates this photo represents \(portionMultiplier)x of a standard serving. Estimate calories for what you see in the photo as-is (I will apply the multiplier separately).\n\n"
+            let pct = Int(portionMultiplier * 100)
+            prompt += "The user ate \(pct)% of this meal. Estimate calories for the FULL meal as shown in the photo — I will apply the \(pct)% reduction separately.\n\n"
         }
 
         prompt += """
