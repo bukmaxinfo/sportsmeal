@@ -66,7 +66,24 @@ actor CalorieEstimationService {
     }
 
     private func buildPrompt(portionMultiplier: Double, notes: String?, cuisine: String?) -> String {
-        var prompt = "Analyze this meal photo and estimate the calories for each food item visible.\n\n"
+        var prompt = """
+        Analyze this meal photo. You MUST identify EVERY food and drink item visible — leave nothing out.
+
+        Scan the ENTIRE photo systematically:
+        • Main dishes (center of plate/bowl)
+        • Side dishes and small plates
+        • Rice, noodles, bread, or other staples
+        • Soups, broths, and liquids
+        • Drinks (tea, juice, soda, milk tea, beer, water — all have calories except plain water)
+        • Sauces, dips, and condiments (soy sauce, chili oil, vinegar, ketchup, mayo)
+        • Garnishes and toppings (sesame seeds, scallions, cilantro, fried shallots, peanuts)
+        • Fruits and desserts
+        • Snacks or sides in the background
+        • Cooking oil visible on the plate or in the dish
+
+        If you see multiple plates/bowls, list items from ALL of them. Miss nothing.
+
+        """
 
         if isChineseCuisine(cuisine) {
             prompt += """
