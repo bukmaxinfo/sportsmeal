@@ -20,9 +20,6 @@ struct HomeView: View {
     private var profile: UserProfile? { profiles.first }
 
     @State private var selectedStat: String?
-    @State private var mealSuggestions: [MealSuggestion] = []
-    @State private var isLoadingSuggestions = false
-    private let recommendationService = MealRecommendationService()
 
     var body: some View {
         NavigationStack {
@@ -42,13 +39,7 @@ struct HomeView: View {
                     // Calories remaining breakdown
                     if let profile = profile {
                         caloriesRemainingCard(profile: profile)
-                        exerciseCoachingCard(profile: profile)
                         healthStatsCard(profile: profile)
-                    }
-
-                    // Meal suggestions
-                    if let profile = profile {
-                        mealSuggestionsSection(profile: profile)
                     }
 
                     todayMealsSection
@@ -239,53 +230,6 @@ struct HomeView: View {
         .luxuryCard()
     }
 
-    // MARK: - Exercise Coaching
-    @ViewBuilder
-    private func exerciseCoachingCard(profile: UserProfile) -> some View {
-        let consumed = todayMeals.reduce(0) { $0 + $1.totalCalories }
-        let exerciseBurned = todayExercises.reduce(0) { $0 + $1.caloriesBurned(weightKg: profile.weightKg) }
-        let budget = profile.bmr + exerciseBurned
-        let surplus = consumed - budget
-
-        if surplus > 0, profile.weightKg > 0 {
-            VStack(alignment: .leading, spacing: 12) {
-                HStack(spacing: 6) {
-                    Image(systemName: "flame.fill")
-                        .foregroundStyle(AppTheme.negative)
-                    Text("You're \(Int(surplus)) kcal over — here's how to burn it off")
-                        .font(.subheadline.weight(.semibold))
-                        .foregroundStyle(AppTheme.textPrimary)
-                }
-
-                let exercises: [(ExerciseType, String)] = [
-                    (.running, "Run"),
-                    (.walking, "Walk"),
-                    (.cycling, "Cycle"),
-                    (.swimming, "Swim"),
-                ]
-
-                HStack(spacing: 10) {
-                    ForEach(exercises, id: \.0) { exercise, label in
-                        let minutes = Int(ceil(surplus / (exercise.metValue * profile.weightKg / 60)))
-                        VStack(spacing: 6) {
-                            Image(systemName: exercise.icon)
-                                .font(.title3)
-                                .foregroundStyle(AppTheme.gold)
-                            Text("\(minutes) min")
-                                .font(.caption.bold())
-                                .foregroundStyle(AppTheme.textPrimary)
-                            Text(label)
-                                .font(.caption2)
-                                .foregroundStyle(AppTheme.textTertiary)
-                        }
-                        .frame(maxWidth: .infinity)
-                    }
-                }
-            }
-            .luxuryCard()
-        }
-    }
-
     // MARK: - Health Stats
     private func healthStatsCard(profile: UserProfile) -> some View {
         HStack(spacing: 12) {
@@ -344,102 +288,6 @@ struct HomeView: View {
                 .frame(width: 260)
                 .presentationCompactAdaptation(.popover)
         }
-    }
-
-    // MARK: - Today's Meals
-    // MARK: - Meal Suggestions
-    private func mealSuggestionsSection(profile: UserProfile) -> some View {
-        let consumed = todayMeals.reduce(0) { $0 + $1.totalCalories }
-        let exerciseBurned = todayExercises.reduce(0) { $0 + $1.caloriesBurned(weightKg: profile.weightKg) }
-        let remaining = Int(profile.bmr + exerciseBurned - consumed)
-
-        return VStack(alignment: .leading, spacing: 12) {
-            HStack {
-                Text("Meal Ideas")
-                    .font(.headline)
-                    .foregroundStyle(AppTheme.textPrimary)
-                Spacer()
-                if remaining > 100 {
-                    Button {
-                        Task { await loadSuggestions(remaining: remaining, profile: profile) }
-                    } label: {
-                        if isLoadingSuggestions {
-                            ProgressView().tint(AppTheme.gold)
-                        } else {
-                            Label(mealSuggestions.isEmpty ? "Get Ideas" : "Refresh", systemImage: "sparkles")
-                                .font(.caption)
-                                .foregroundStyle(AppTheme.gold)
-                        }
-                    }
-                    .disabled(isLoadingSuggestions)
-                }
-            }
-
-            if remaining <= 100 {
-                Text("You've used most of your calorie budget today")
-                    .font(.caption)
-                    .foregroundStyle(AppTheme.textTertiary)
-            } else if mealSuggestions.isEmpty && !isLoadingSuggestions {
-                Text("Tap 'Get Ideas' for AI meal suggestions within your \(remaining) kcal budget")
-                    .font(.caption)
-                    .foregroundStyle(AppTheme.textTertiary)
-            } else {
-                ForEach(mealSuggestions) { suggestion in
-                    HStack(spacing: 12) {
-                        VStack(alignment: .leading, spacing: 3) {
-                            Text(suggestion.name)
-                                .font(.subheadline.weight(.semibold))
-                                .foregroundStyle(AppTheme.textPrimary)
-                            Text(suggestion.description)
-                                .font(.caption)
-                                .foregroundStyle(AppTheme.textSecondary)
-                                .lineLimit(2)
-                        }
-                        Spacer()
-                        VStack(alignment: .trailing) {
-                            Text("\(suggestion.estimatedCalories)")
-                                .font(.subheadline.bold())
-                                .foregroundStyle(AppTheme.gold)
-                            Text("kcal")
-                                .font(.caption2)
-                                .foregroundStyle(AppTheme.textTertiary)
-                        }
-                    }
-                    .luxuryCard()
-                }
-            }
-        }
-    }
-
-    private func loadSuggestions(remaining: Int, profile: UserProfile) async {
-        isLoadingSuggestions = true
-        let recentNames = todayMeals.flatMap { $0.foodItems.map(\.name) }
-
-        // Build macro guidance if we have data
-        var macroGuidance: String?
-        let targets = profile.macroTargets
-        let todayP = todayMeals.reduce(0) { $0 + $1.totalProtein }
-        let todayC = todayMeals.reduce(0) { $0 + $1.totalCarbs }
-        let todayF = todayMeals.reduce(0) { $0 + $1.totalFat }
-        if todayMeals.contains(where: { $0.hasMacros }) {
-            var parts: [String] = []
-            if todayP < targets.protein * 0.7 { parts.append("low on protein (need \(Int(targets.protein - todayP))g more)") }
-            if todayC < targets.carbs * 0.7 { parts.append("low on carbs (need \(Int(targets.carbs - todayC))g more)") }
-            if todayF > targets.fat * 0.9 { parts.append("already near fat target") }
-            if !parts.isEmpty { macroGuidance = "Macro note: user is \(parts.joined(separator: ", "))" }
-        }
-
-        do {
-            mealSuggestions = try await recommendationService.suggestMeals(
-                remainingCalories: remaining,
-                dietaryPreference: profile.dietarySummary,
-                recentMealNames: recentNames,
-                macroGuidance: macroGuidance
-            )
-        } catch {
-            // Silently fail — suggestions are optional
-        }
-        isLoadingSuggestions = false
     }
 
     // MARK: - Today's Meals

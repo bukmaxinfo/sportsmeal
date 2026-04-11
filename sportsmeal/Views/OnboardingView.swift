@@ -10,8 +10,6 @@ struct OnboardingView: View {
     @State private var weightKg = 70.0
     @State private var sex: Sex = .male
     @State private var activityLevel: ActivityLevel = .moderate
-    @State private var goalWeightKg = 65.0
-    @State private var skipApiKey = false
 
     let onComplete: () -> Void
 
@@ -21,9 +19,8 @@ struct OnboardingView: View {
             AppTheme.background.ignoresSafeArea()
 
             VStack(spacing: 0) {
-                // Step indicators
                 HStack(spacing: 8) {
-                    ForEach(0..<5) { step in
+                    ForEach(0..<3) { step in
                         Capsule()
                             .fill(step <= currentStep ? AppTheme.gold : AppTheme.surfaceLight)
                             .frame(height: 3)
@@ -36,9 +33,7 @@ struct OnboardingView: View {
                 TabView(selection: $currentStep) {
                     welcomeStep.tag(0)
                     bodyInfoStep.tag(1)
-                    activityStep.tag(2)
-                    goalStep.tag(3)
-                    apiKeyStep.tag(4)
+                    apiKeyStep.tag(2)
                 }
                 .tabViewStyle(.page(indexDisplayMode: .never))
                 .animation(.easeInOut, value: currentStep)
@@ -52,7 +47,6 @@ struct OnboardingView: View {
         VStack(spacing: 28) {
             Spacer()
 
-            // Gold icon
             ZStack {
                 Circle()
                     .fill(AppTheme.goldSubtle)
@@ -67,7 +61,7 @@ struct OnboardingView: View {
                     .font(.system(size: 32, weight: .bold, design: .rounded))
                     .foregroundStyle(AppTheme.textPrimary)
 
-                Text("AI-powered calorie tracking\nthat fits your lifestyle")
+                Text("Photo your meal.\nGet calories & macros instantly.")
                     .font(.body)
                     .foregroundStyle(AppTheme.textSecondary)
                     .multilineTextAlignment(.center)
@@ -100,7 +94,7 @@ struct OnboardingView: View {
         .padding()
     }
 
-    // MARK: - Step 2: Body Info
+    // MARK: - Step 2: Body Info + Activity
     private var bodyInfoStep: some View {
         VStack(spacing: 24) {
             Spacer()
@@ -110,7 +104,6 @@ struct OnboardingView: View {
                 .foregroundStyle(AppTheme.textPrimary)
 
             VStack(spacing: 16) {
-                // Sex picker
                 HStack(spacing: 12) {
                     ForEach(Sex.allCases, id: \.self) { s in
                         Button {
@@ -136,7 +129,7 @@ struct OnboardingView: View {
                         .tint(AppTheme.gold)
                 }
 
-                onboardingField(label: "Height", value: "") {
+                onboardingField(label: "Height") {
                     HStack {
                         TextField("cm", value: $heightCm, format: .number)
                             .keyboardType(.decimalPad)
@@ -147,7 +140,7 @@ struct OnboardingView: View {
                     }
                 }
 
-                onboardingField(label: "Weight", value: "") {
+                onboardingField(label: "Weight") {
                     HStack {
                         TextField("kg", value: $weightKg, format: .number)
                             .keyboardType(.decimalPad)
@@ -157,119 +150,47 @@ struct OnboardingView: View {
                             .foregroundStyle(AppTheme.textTertiary)
                     }
                 }
-            }
-            .luxuryCard()
-            .padding(.horizontal, 16)
 
-            Spacer()
-            navigationButtons
-        }
-        .padding()
-    }
-
-    // MARK: - Step 3: Activity Level
-    private var activityStep: some View {
-        VStack(spacing: 24) {
-            Spacer()
-
-            VStack(spacing: 8) {
-                Text("Activity Level")
-                    .font(.title.bold())
-                    .foregroundStyle(AppTheme.textPrimary)
-                Text("How active are you in a typical week?")
-                    .font(.subheadline)
-                    .foregroundStyle(AppTheme.textSecondary)
-            }
-
-            VStack(spacing: 6) {
-                ForEach(ActivityLevel.allCases, id: \.self) { level in
-                    Button {
-                        activityLevel = level
-                    } label: {
-                        HStack {
-                            VStack(alignment: .leading, spacing: 2) {
-                                Text(level.rawValue)
-                                    .font(.subheadline.weight(.semibold))
-                                    .foregroundStyle(activityLevel == level ? .black : AppTheme.textPrimary)
-                                Text(level.description)
-                                    .font(.caption)
-                                    .foregroundStyle(activityLevel == level ? .black.opacity(0.6) : AppTheme.textTertiary)
-                            }
-                            Spacer()
-                            if activityLevel == level {
-                                Image(systemName: "checkmark")
-                                    .font(.caption.bold())
-                                    .foregroundStyle(.black)
-                            }
+                VStack(alignment: .leading, spacing: 6) {
+                    Text("Activity Level")
+                        .foregroundStyle(AppTheme.textSecondary)
+                    Picker("Activity", selection: $activityLevel) {
+                        ForEach(ActivityLevel.allCases, id: \.self) { level in
+                            Text(level.rawValue).tag(level)
                         }
-                        .padding(12)
-                        .background(activityLevel == level ? AppTheme.gold : AppTheme.surface)
-                        .clipShape(RoundedRectangle(cornerRadius: 10))
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 10)
-                                .stroke(activityLevel == level ? Color.clear : AppTheme.border, lineWidth: 1)
-                        )
                     }
-                    .buttonStyle(.plain)
-                }
-            }
-            .padding(.horizontal, 16)
-
-            Spacer()
-            navigationButtons
-        }
-        .padding()
-    }
-
-    // MARK: - Step 4: Goal
-    private var goalStep: some View {
-        VStack(spacing: 24) {
-            Spacer()
-
-            Text("Your Goal")
-                .font(.title.bold())
-                .foregroundStyle(AppTheme.textPrimary)
-
-            onboardingField(label: "Target Weight", value: "") {
-                HStack {
-                    TextField("kg", value: $goalWeightKg, format: .number)
-                        .keyboardType(.decimalPad)
-                        .multilineTextAlignment(.trailing)
-                        .frame(width: 70)
-                    Text("kg")
-                        .foregroundStyle(AppTheme.textTertiary)
+                    .pickerStyle(.segmented)
                 }
             }
             .luxuryCard()
             .padding(.horizontal, 16)
 
-            // Stats preview
-            let heightM = heightCm / 100
-            let previewBMI = heightM > 0 ? weightKg / (heightM * heightM) : 0
-            let computedAge = Calendar.current.dateComponents([.year], from: dateOfBirth, to: Date()).year ?? 25
-            let previewBMR = sex == .male
-                ? 10 * weightKg + 6.25 * heightCm - 5 * Double(computedAge) + 5
-                : 10 * weightKg + 6.25 * heightCm - 5 * Double(computedAge) - 161
-
-            HStack(spacing: 16) {
-                previewStat(label: "BMI", value: String(format: "%.1f", previewBMI))
-                previewStat(label: "BMR", value: "\(Int(previewBMR))")
-                previewStat(label: "TDEE", value: "\(Int(previewBMR * activityLevel.multiplier))")
-            }
-            .padding(.horizontal, 16)
-
             Spacer()
 
-            Button { withAnimation { currentStep = 4 } } label: {
-                Text("Continue")
-                    .luxuryButton()
+            HStack {
+                Button("Back") {
+                    withAnimation { currentStep -= 1 }
+                }
+                .foregroundStyle(AppTheme.textSecondary)
+
+                Spacer()
+
+                Button { withAnimation { currentStep += 1 } } label: {
+                    Text("Continue")
+                        .font(.headline)
+                        .padding(.horizontal, 28)
+                        .padding(.vertical, 12)
+                        .background(AppTheme.goldGradient)
+                        .foregroundStyle(.black)
+                        .clipShape(RoundedRectangle(cornerRadius: 14))
+                }
             }
             .padding(.horizontal, 24)
         }
         .padding()
     }
 
-    // MARK: - Step 5: API Key
+    // MARK: - Step 3: API Key
     private var apiKeyStep: some View {
         VStack(spacing: 24) {
             Spacer()
@@ -329,20 +250,7 @@ struct OnboardingView: View {
     }
 
     // MARK: - Helpers
-    private func previewStat(label: String, value: String) -> some View {
-        VStack(spacing: 4) {
-            Text(label)
-                .font(.caption2.weight(.semibold))
-                .foregroundStyle(AppTheme.gold)
-            Text(value)
-                .font(.title3.bold())
-                .foregroundStyle(AppTheme.textPrimary)
-        }
-        .frame(maxWidth: .infinity)
-        .luxuryCard(padding: 12)
-    }
-
-    private func onboardingField<Content: View>(label: String, value: String, @ViewBuilder trailing: () -> Content) -> some View {
+    private func onboardingField<Content: View>(label: String, @ViewBuilder trailing: () -> Content) -> some View {
         HStack {
             Text(label)
                 .foregroundStyle(AppTheme.textSecondary)
@@ -352,28 +260,6 @@ struct OnboardingView: View {
         }
     }
 
-    private var navigationButtons: some View {
-        HStack {
-            Button("Back") {
-                withAnimation { currentStep -= 1 }
-            }
-            .foregroundStyle(AppTheme.textSecondary)
-
-            Spacer()
-
-            Button { withAnimation { currentStep += 1 } } label: {
-                Text("Continue")
-                    .font(.headline)
-                    .padding(.horizontal, 28)
-                    .padding(.vertical, 12)
-                    .background(AppTheme.goldGradient)
-                    .foregroundStyle(.black)
-                    .clipShape(RoundedRectangle(cornerRadius: 14))
-            }
-        }
-        .padding(.horizontal, 24)
-    }
-
     private func saveProfile() {
         let profile = UserProfile(
             name: name,
@@ -381,8 +267,7 @@ struct OnboardingView: View {
             heightCm: heightCm,
             weightKg: weightKg,
             sex: sex,
-            activityLevel: activityLevel,
-            goalWeightKg: goalWeightKg
+            activityLevel: activityLevel
         )
         modelContext.insert(profile)
         onComplete()

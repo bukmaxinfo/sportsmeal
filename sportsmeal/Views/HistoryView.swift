@@ -205,6 +205,9 @@ struct MealDetailView: View {
     @State private var showingSaveTemplate = false
     @State private var templateName = ""
     @State private var templateSaved = false
+    @State private var editingItemIndex: Int?
+    @State private var editCalText = ""
+    @State private var isEditing = false
 
     var body: some View {
         ScrollView {
@@ -238,11 +241,19 @@ struct MealDetailView: View {
                 }
 
                 VStack(alignment: .leading, spacing: 8) {
-                    Text("Food Items")
-                        .font(.headline)
-                        .foregroundStyle(AppTheme.textPrimary)
+                    HStack {
+                        Text("Food Items")
+                            .font(.headline)
+                            .foregroundStyle(AppTheme.textPrimary)
+                        Spacer()
+                        if isEditing {
+                            Text("Tap calories to edit")
+                                .font(.caption)
+                                .foregroundStyle(AppTheme.textTertiary)
+                        }
+                    }
 
-                    ForEach(meal.foodItems) { item in
+                    ForEach(Array(meal.foodItems.enumerated()), id: \.element.id) { index, item in
                         VStack(spacing: 4) {
                             HStack {
                                 VStack(alignment: .leading, spacing: 2) {
@@ -254,9 +265,42 @@ struct MealDetailView: View {
                                         .foregroundStyle(AppTheme.textTertiary)
                                 }
                                 Spacer()
-                                Text("\(Int(item.calories)) kcal")
-                                    .font(.subheadline.bold())
-                                    .foregroundStyle(AppTheme.gold)
+                                if isEditing && editingItemIndex == index {
+                                    HStack(spacing: 4) {
+                                        TextField("kcal", text: $editCalText)
+                                            .keyboardType(.numberPad)
+                                            .multilineTextAlignment(.trailing)
+                                            .frame(width: 60)
+                                            .padding(.horizontal, 8)
+                                            .padding(.vertical, 4)
+                                            .background(AppTheme.surfaceLight)
+                                            .clipShape(RoundedRectangle(cornerRadius: 6))
+                                        Button {
+                                            applyEdit(index: index)
+                                        } label: {
+                                            Image(systemName: "checkmark.circle.fill")
+                                                .foregroundStyle(AppTheme.positive)
+                                        }
+                                    }
+                                } else if isEditing {
+                                    Button {
+                                        editingItemIndex = index
+                                        editCalText = "\(Int(item.calories))"
+                                    } label: {
+                                        HStack(spacing: 4) {
+                                            Text("\(Int(item.calories)) kcal")
+                                                .font(.subheadline.bold())
+                                                .foregroundStyle(AppTheme.gold)
+                                            Image(systemName: "pencil")
+                                                .font(.caption2)
+                                                .foregroundStyle(AppTheme.textTertiary)
+                                        }
+                                    }
+                                } else {
+                                    Text("\(Int(item.calories)) kcal")
+                                        .font(.subheadline.bold())
+                                        .foregroundStyle(AppTheme.gold)
+                                }
                             }
                             if let p = item.proteinGrams, let c = item.carbsGrams, let f = item.fatGrams {
                                 HStack(spacing: 12) {
@@ -284,12 +328,21 @@ struct MealDetailView: View {
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .primaryAction) {
-                Button {
-                    templateName = meal.foodItems.map(\.name).joined(separator: " + ")
-                    showingSaveTemplate = true
-                } label: {
-                    Image(systemName: "bookmark.fill")
-                        .foregroundStyle(AppTheme.gold)
+                HStack(spacing: 12) {
+                    Button {
+                        isEditing.toggle()
+                        editingItemIndex = nil
+                    } label: {
+                        Image(systemName: isEditing ? "checkmark" : "pencil")
+                            .foregroundStyle(AppTheme.gold)
+                    }
+                    Button {
+                        templateName = meal.foodItems.map(\.name).joined(separator: " + ")
+                        showingSaveTemplate = true
+                    } label: {
+                        Image(systemName: "bookmark.fill")
+                            .foregroundStyle(AppTheme.gold)
+                    }
                 }
             }
             ToolbarItem(placement: .destructiveAction) {
@@ -342,6 +395,22 @@ struct MealDetailView: View {
         } message: {
             Text("This will permanently remove this meal and its \(Int(meal.totalCalories)) kcal from your history.")
         }
+    }
+
+    private func applyEdit(index: Int) {
+        guard let newCal = Double(editCalText), index < meal.foodItems.count else { return }
+        var items = meal.foodItems
+        items[index] = FoodItem(
+            name: items[index].name,
+            calories: newCal,
+            portionSize: items[index].portionSize,
+            proteinGrams: items[index].proteinGrams,
+            carbsGrams: items[index].carbsGrams,
+            fatGrams: items[index].fatGrams
+        )
+        meal.foodItems = items
+        meal.totalCalories = items.reduce(0) { $0 + $1.calories }
+        editingItemIndex = nil
     }
 }
 

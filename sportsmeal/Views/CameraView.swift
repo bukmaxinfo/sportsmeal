@@ -17,6 +17,8 @@ struct CameraView: View {
     @State private var showOptions = false
     @State private var showQuickLog = false
     @State private var analysisTask: Task<Void, Never>?
+    @State private var editingFoodIndex: Int?
+    @State private var editCaloriesText = ""
 
     private let service = CalorieEstimationService()
 
@@ -73,20 +75,18 @@ struct CameraView: View {
                 .navigationTitle("Scan Meal")
                 .onDisappear { analysisTask?.cancel() }
                 .toolbar {
-                    ToolbarItem(placement: .primaryAction) {
+                    ToolbarItem(placement: .secondaryAction) {
                         NavigationLink {
                             BarcodeScannerView()
                         } label: {
-                            Label("Barcode", systemImage: "barcode.viewfinder")
-                                .foregroundStyle(AppTheme.gold)
+                            Label("Barcode Scanner", systemImage: "barcode.viewfinder")
                         }
                     }
                     ToolbarItem(placement: .secondaryAction) {
                         NavigationLink {
                             MenuScannerView()
                         } label: {
-                            Label("Scan Menu", systemImage: "menucard")
-                                .foregroundStyle(AppTheme.gold)
+                            Label("Menu Scanner", systemImage: "menucard")
                         }
                     }
                 }
@@ -181,12 +181,14 @@ struct CameraView: View {
 
     // MARK: - Result
     private func resultView(_ result: CalorieEstimationResult) -> some View {
-        VStack(spacing: 16) {
+        let editedTotal = result.foods.reduce(0) { $0 + $1.calories }
+
+        return VStack(spacing: 16) {
             VStack(spacing: 8) {
                 Text("Estimated Calories")
                     .font(.subheadline)
                     .foregroundStyle(AppTheme.textTertiary)
-                Text("\(Int(result.totalCalories))")
+                Text("\(Int(editedTotal))")
                     .font(.system(size: 44, weight: .bold, design: .rounded))
                     .foregroundStyle(AppTheme.gold)
                 Text("kcal")
@@ -212,11 +214,17 @@ struct CameraView: View {
             .luxuryCard(padding: 20)
 
             VStack(alignment: .leading, spacing: 8) {
-                Text("Food Items")
-                    .font(.headline)
-                    .foregroundStyle(AppTheme.textPrimary)
+                HStack {
+                    Text("Food Items")
+                        .font(.headline)
+                        .foregroundStyle(AppTheme.textPrimary)
+                    Spacer()
+                    Text("Tap to edit")
+                        .font(.caption)
+                        .foregroundStyle(AppTheme.textTertiary)
+                }
 
-                ForEach(result.foods, id: \.name) { food in
+                ForEach(Array(result.foods.enumerated()), id: \.offset) { index, food in
                     VStack(spacing: 4) {
                         HStack {
                             VStack(alignment: .leading, spacing: 2) {
@@ -228,12 +236,41 @@ struct CameraView: View {
                                     .foregroundStyle(AppTheme.textTertiary)
                             }
                             Spacer()
-                            Text("\(Int(food.calories))")
-                                .font(.subheadline.bold())
-                                .foregroundStyle(AppTheme.gold)
-                            + Text(" kcal")
-                                .font(.caption)
-                                .foregroundStyle(AppTheme.textTertiary)
+                            if editingFoodIndex == index {
+                                HStack(spacing: 4) {
+                                    TextField("kcal", text: $editCaloriesText)
+                                        .keyboardType(.numberPad)
+                                        .multilineTextAlignment(.trailing)
+                                        .frame(width: 60)
+                                        .padding(.horizontal, 8)
+                                        .padding(.vertical, 4)
+                                        .background(AppTheme.surfaceLight)
+                                        .clipShape(RoundedRectangle(cornerRadius: 6))
+                                    Button {
+                                        applyCalorieEdit(index: index)
+                                    } label: {
+                                        Image(systemName: "checkmark.circle.fill")
+                                            .foregroundStyle(AppTheme.positive)
+                                    }
+                                }
+                            } else {
+                                Button {
+                                    editingFoodIndex = index
+                                    editCaloriesText = "\(Int(food.calories))"
+                                } label: {
+                                    HStack(spacing: 4) {
+                                        Text("\(Int(food.calories))")
+                                            .font(.subheadline.bold())
+                                            .foregroundStyle(AppTheme.gold)
+                                        Text("kcal")
+                                            .font(.caption)
+                                            .foregroundStyle(AppTheme.textTertiary)
+                                        Image(systemName: "pencil")
+                                            .font(.caption2)
+                                            .foregroundStyle(AppTheme.textTertiary)
+                                    }
+                                }
+                            }
                         }
                         if let p = food.proteinGrams, let c = food.carbsGrams, let f = food.fatGrams {
                             HStack(spacing: 12) {
@@ -261,6 +298,30 @@ struct CameraView: View {
                     .transition(.opacity)
             }
         }
+    }
+
+    private func applyCalorieEdit(index: Int) {
+        guard let result = estimationResult,
+              let newCal = Double(editCaloriesText),
+              index < result.foods.count else { return }
+        var food = result.foods[index]
+        food = EstimatedFood(
+            name: food.name,
+            calories: newCal,
+            portionSize: food.portionSize,
+            proteinGrams: food.proteinGrams,
+            carbsGrams: food.carbsGrams,
+            fatGrams: food.fatGrams
+        )
+        var foods = result.foods
+        foods[index] = food
+        let newTotal = foods.reduce(0) { $0 + $1.calories }
+        estimationResult = CalorieEstimationResult(
+            foods: foods,
+            totalCalories: newTotal,
+            healthScore: result.healthScore
+        )
+        editingFoodIndex = nil
     }
 
     // MARK: - Meal Options

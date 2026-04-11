@@ -23,23 +23,11 @@ struct MainTabView: View {
                 }
                 .tag(2)
 
-            ExerciseView()
-                .tabItem {
-                    Label("Exercise", systemImage: "figure.run")
-                }
-                .tag(3)
-
-            PantryView()
-                .tabItem {
-                    Label("Pantry", systemImage: "refrigerator.fill")
-                }
-                .tag(4)
-
             ProfileView()
                 .tabItem {
                     Label("Profile", systemImage: "person.fill")
                 }
-                .tag(5)
+                .tag(3)
         }
     }
 }

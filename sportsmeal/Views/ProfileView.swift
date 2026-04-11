@@ -27,6 +27,8 @@ struct ProfileDetailView: View {
     @State private var isEditing = false
     @State private var explanationTitle: String?
     @State private var explanationText: String?
+    @State private var showingExercise = false
+    @State private var showingPantry = false
 
     var body: some View {
         Form {
@@ -151,6 +153,19 @@ struct ProfileDetailView: View {
                 }
             }
 
+            Section("Tools") {
+                Button {
+                    showingExercise = true
+                } label: {
+                    Label("Exercise", systemImage: "figure.run")
+                }
+                Button {
+                    showingPantry = true
+                } label: {
+                    Label("Pantry & Recipes", systemImage: "refrigerator.fill")
+                }
+            }
+
             Section("Settings") {
                 NavigationLink {
                     LanguageSettingsView()
@@ -198,6 +213,12 @@ struct ProfileDetailView: View {
                 isEditing.toggle()
             }
             .foregroundStyle(AppTheme.gold)
+        }
+        .sheet(isPresented: $showingExercise) {
+            ExerciseView()
+        }
+        .sheet(isPresented: $showingPantry) {
+            PantryView()
         }
         .alert(explanationTitle ?? "", isPresented: Binding(
             get: { explanationText != nil },
