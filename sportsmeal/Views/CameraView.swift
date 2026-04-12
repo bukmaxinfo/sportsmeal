@@ -19,6 +19,9 @@ struct CameraView: View {
     @State private var analysisTask: Task<Void, Never>?
     @State private var editingFoodIndex: Int?
     @State private var editCaloriesText = ""
+    @State private var showingAddFood = false
+    @State private var newFoodName = ""
+    @State private var newFoodCalories = ""
 
     private let service = CalorieEstimationService()
 
@@ -227,6 +230,16 @@ struct CameraView: View {
                 ForEach(Array(result.foods.enumerated()), id: \.offset) { index, food in
                     VStack(spacing: 4) {
                         HStack {
+                            // Remove button
+                            if result.foods.count > 1 {
+                                Button {
+                                    removeFood(at: index)
+                                } label: {
+                                    Image(systemName: "minus.circle.fill")
+                                        .font(.caption)
+                                        .foregroundStyle(AppTheme.negative.opacity(0.7))
+                                }
+                            }
                             VStack(alignment: .leading, spacing: 2) {
                                 Text(food.name)
                                     .font(.subheadline.weight(.semibold))
@@ -284,6 +297,55 @@ struct CameraView: View {
                     .padding(.vertical, 4)
                     Divider().overlay(AppTheme.border)
                 }
+
+                // Add food item
+                if showingAddFood {
+                    VStack(spacing: 8) {
+                        TextField("Food name", text: $newFoodName)
+                            .font(.subheadline)
+                            .padding(8)
+                            .background(AppTheme.surfaceLight)
+                            .clipShape(RoundedRectangle(cornerRadius: 6))
+                        HStack {
+                            TextField("Calories", text: $newFoodCalories)
+                                .keyboardType(.numberPad)
+                                .font(.subheadline)
+                                .padding(8)
+                                .background(AppTheme.surfaceLight)
+                                .clipShape(RoundedRectangle(cornerRadius: 6))
+                            Button {
+                                addFood()
+                            } label: {
+                                Image(systemName: "checkmark.circle.fill")
+                                    .foregroundStyle(AppTheme.positive)
+                                    .font(.title3)
+                            }
+                            .disabled(newFoodName.isEmpty || newFoodCalories.isEmpty)
+                            Button {
+                                showingAddFood = false
+                                newFoodName = ""
+                                newFoodCalories = ""
+                            } label: {
+                                Image(systemName: "xmark.circle.fill")
+                                    .foregroundStyle(AppTheme.textTertiary)
+                                    .font(.title3)
+                            }
+                        }
+                    }
+                    .padding(.top, 4)
+                } else {
+                    Button {
+                        showingAddFood = true
+                    } label: {
+                        HStack(spacing: 4) {
+                            Image(systemName: "plus.circle.fill")
+                            Text("Add missing item")
+                        }
+                        .font(.caption.weight(.semibold))
+                        .foregroundStyle(AppTheme.gold)
+                    }
+                    .padding(.top, 4)
+                }
             }
             .luxuryCard()
 
@@ -322,6 +384,48 @@ struct CameraView: View {
             healthScore: result.healthScore
         )
         editingFoodIndex = nil
+    }
+
+    private func removeFood(at index: Int) {
+        guard let result = estimationResult, index < result.foods.count else { return }
+        var foods = result.foods
+        foods.remove(at: index)
+        let newTotal = foods.reduce(0) { $0 + $1.calories }
+        withAnimation {
+            estimationResult = CalorieEstimationResult(
+                foods: foods,
+                totalCalories: newTotal,
+                healthScore: result.healthScore
+            )
+        }
+        if editingFoodIndex == index { editingFoodIndex = nil }
+    }
+
+    private func addFood() {
+        guard let result = estimationResult,
+              !newFoodName.isEmpty,
+              let cal = Double(newFoodCalories) else { return }
+        let newFood = EstimatedFood(
+            name: newFoodName,
+            calories: cal,
+            portionSize: "",
+            proteinGrams: nil,
+            carbsGrams: nil,
+            fatGrams: nil
+        )
+        var foods = result.foods
+        foods.append(newFood)
+        let newTotal = foods.reduce(0) { $0 + $1.calories }
+        withAnimation {
+            estimationResult = CalorieEstimationResult(
+                foods: foods,
+                totalCalories: newTotal,
+                healthScore: result.healthScore
+            )
+        }
+        newFoodName = ""
+        newFoodCalories = ""
+        showingAddFood = false
     }
 
     // MARK: - Meal Options

@@ -5,8 +5,11 @@ import Charts
 struct HistoryView: View {
     @Environment(\.modelContext) private var modelContext
     @Query(sort: \Meal.timestamp, order: .reverse) private var meals: [Meal]
+    @Query private var profiles: [UserProfile]
     @State private var selectedTab = 0
     @State private var showingExportSheet = false
+
+    private var dailyBudget: Double { profiles.first?.bmr ?? 2000 }
 
     var body: some View {
         NavigationStack {
@@ -82,14 +85,15 @@ struct HistoryView: View {
                                 }
                             }
                         } header: {
+                            let total = dayMeals.reduce(0) { $0 + $1.totalCalories }
+                            let isOver = total > dailyBudget
                             HStack {
                                 Text(date, style: .date)
                                     .foregroundStyle(AppTheme.textSecondary)
                                 Spacer()
-                                let total = dayMeals.reduce(0) { $0 + $1.totalCalories }
-                                Text("\(Int(total)) kcal")
+                                Text("\(Int(total)) / \(Int(dailyBudget)) kcal")
                                     .font(.caption.bold())
-                                    .foregroundStyle(AppTheme.gold)
+                                    .foregroundStyle(isOver ? AppTheme.negative : AppTheme.gold)
                             }
                         }
                     }
@@ -107,13 +111,23 @@ struct HistoryView: View {
                         .font(.headline)
                         .foregroundStyle(AppTheme.textPrimary)
 
-                    Chart(last7DaysData, id: \.date) { entry in
-                        BarMark(
-                            x: .value("Day", entry.date, unit: .day),
-                            y: .value("Calories", entry.calories)
-                        )
-                        .foregroundStyle(AppTheme.goldGradient)
-                        .cornerRadius(4)
+                    Chart {
+                        ForEach(last7DaysData, id: \.date) { entry in
+                            BarMark(
+                                x: .value("Day", entry.date, unit: .day),
+                                y: .value("Calories", entry.calories)
+                            )
+                            .foregroundStyle(entry.calories > dailyBudget ? AnyShapeStyle(AppTheme.negative.opacity(0.8)) : AnyShapeStyle(AppTheme.goldGradient))
+                            .cornerRadius(4)
+                        }
+                        RuleMark(y: .value("Budget", dailyBudget))
+                            .foregroundStyle(AppTheme.textTertiary)
+                            .lineStyle(StrokeStyle(lineWidth: 1, dash: [4, 4]))
+                            .annotation(position: .top, alignment: .trailing) {
+                                Text("Budget")
+                                    .font(.system(size: 9))
+                                    .foregroundStyle(AppTheme.textTertiary)
+                            }
                     }
                     .accessibilityLabel("Daily calories over the last 7 days")
                     .chartYAxis {
@@ -208,6 +222,9 @@ struct MealDetailView: View {
     @State private var editingItemIndex: Int?
     @State private var editCalText = ""
     @State private var isEditing = false
+    @State private var showingAddItem = false
+    @State private var newItemName = ""
+    @State private var newItemCalories = ""
 
     var body: some View {
         ScrollView {
@@ -256,6 +273,15 @@ struct MealDetailView: View {
                     ForEach(Array(meal.foodItems.enumerated()), id: \.element.id) { index, item in
                         VStack(spacing: 4) {
                             HStack {
+                                if isEditing && meal.foodItems.count > 1 {
+                                    Button {
+                                        removeItem(at: index)
+                                    } label: {
+                                        Image(systemName: "minus.circle.fill")
+                                            .font(.caption)
+                                            .foregroundStyle(AppTheme.negative.opacity(0.7))
+                                    }
+                                }
                                 VStack(alignment: .leading, spacing: 2) {
                                     Text(item.name)
                                         .font(.subheadline.weight(.semibold))
@@ -313,6 +339,53 @@ struct MealDetailView: View {
                         }
                         .padding(.vertical, 2)
                         Divider().overlay(AppTheme.border)
+                    }
+
+                    // Add item in edit mode
+                    if isEditing {
+                        if showingAddItem {
+                            VStack(spacing: 8) {
+                                TextField("Food name", text: $newItemName)
+                                    .font(.subheadline)
+                                    .padding(8)
+                                    .background(AppTheme.surfaceLight)
+                                    .clipShape(RoundedRectangle(cornerRadius: 6))
+                                HStack {
+                                    TextField("Calories", text: $newItemCalories)
+                                        .keyboardType(.numberPad)
+                                        .font(.subheadline)
+                                        .padding(8)
+                                        .background(AppTheme.surfaceLight)
+                                        .clipShape(RoundedRectangle(cornerRadius: 6))
+                                    Button { addItem() } label: {
+                                        Image(systemName: "checkmark.circle.fill")
+                                            .foregroundStyle(AppTheme.positive)
+                                            .font(.title3)
+                                    }
+                                    .disabled(newItemName.isEmpty || newItemCalories.isEmpty)
+                                    Button {
+                                        showingAddItem = false
+                                        newItemName = ""
+                                        newItemCalories = ""
+                                    } label: {
+                                        Image(systemName: "xmark.circle.fill")
+                                            .foregroundStyle(AppTheme.textTertiary)
+                                            .font(.title3)
+                                    }
+                                }
+                            }
+                            .padding(.top, 4)
+                        } else {
+                            Button { showingAddItem = true } label: {
+                                HStack(spacing: 4) {
+                                    Image(systemName: "plus.circle.fill")
+                                    Text("Add missing item")
+                                }
+                                .font(.caption.weight(.semibold))
+                                .foregroundStyle(AppTheme.gold)
+                            }
+                            .padding(.top, 4)
+                        }
                     }
                 }
                 .luxuryCard()
@@ -411,6 +484,26 @@ struct MealDetailView: View {
         meal.foodItems = items
         meal.totalCalories = items.reduce(0) { $0 + $1.calories }
         editingItemIndex = nil
+    }
+
+    private func removeItem(at index: Int) {
+        guard index < meal.foodItems.count else { return }
+        var items = meal.foodItems
+        items.remove(at: index)
+        meal.foodItems = items
+        meal.totalCalories = items.reduce(0) { $0 + $1.calories }
+        if editingItemIndex == index { editingItemIndex = nil }
+    }
+
+    private func addItem() {
+        guard !newItemName.isEmpty, let cal = Double(newItemCalories) else { return }
+        var items = meal.foodItems
+        items.append(FoodItem(name: newItemName, calories: cal))
+        meal.foodItems = items
+        meal.totalCalories = items.reduce(0) { $0 + $1.calories }
+        newItemName = ""
+        newItemCalories = ""
+        showingAddItem = false
     }
 }
 

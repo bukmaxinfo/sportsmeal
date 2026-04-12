@@ -165,6 +165,31 @@ struct OnboardingView: View {
             .luxuryCard()
             .padding(.horizontal, 16)
 
+            // Live calorie budget preview
+            if heightCm > 0 && weightKg > 0 {
+                let computedBMR = computeBMR()
+                VStack(spacing: 4) {
+                    Text("Your daily calorie budget")
+                        .font(.caption)
+                        .foregroundStyle(AppTheme.textTertiary)
+                    HStack(spacing: 4) {
+                        Text("~\(Int(computedBMR))")
+                            .font(.system(size: 28, weight: .bold, design: .rounded))
+                            .foregroundStyle(AppTheme.gold)
+                        Text("kcal")
+                            .font(.caption)
+                            .foregroundStyle(AppTheme.textTertiary)
+                    }
+                    Text("Based on your BMR — we'll track against this")
+                        .font(.system(size: 10))
+                        .foregroundStyle(AppTheme.textTertiary)
+                }
+                .frame(maxWidth: .infinity)
+                .luxuryCard(padding: 12)
+                .padding(.horizontal, 16)
+                .animation(.easeInOut, value: computedBMR)
+            }
+
             Spacer()
 
             HStack {
@@ -258,6 +283,12 @@ struct OnboardingView: View {
             trailing()
                 .foregroundStyle(AppTheme.textPrimary)
         }
+    }
+
+    private func computeBMR() -> Double {
+        let age = Calendar.current.dateComponents([.year], from: dateOfBirth, to: Date()).year ?? 25
+        let base = 10.0 * weightKg + 6.25 * heightCm - 5.0 * Double(age)
+        return sex == .male ? base + 5 : base - 161
     }
 
     private func saveProfile() {
