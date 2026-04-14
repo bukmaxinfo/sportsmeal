@@ -10,9 +10,5 @@
 	<string>SportsMeal needs camera access to photograph your meals for calorie estimation.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>SportsMeal needs photo library access to select meal photos for calorie estimation.</string>
-	<key>UIBackgroundModes</key>
-	<array>
-		<string>remote-notification</string>
-	</array>
 </dict>
 </plist>
