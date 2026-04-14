@@ -233,7 +233,7 @@ struct OnboardingView: View {
                 Text("Almost There!")
                     .font(.title.bold())
                     .foregroundStyle(AppTheme.textPrimary)
-                Text("SportsMeal uses Claude AI to analyze your meals.\nYou'll need an Anthropic API key to get started.")
+                Text("SportsMeal uses Claude AI to analyze your meals.\nBring your own Anthropic API key to enable AI features and control your own usage costs.")
                     .font(.subheadline)
                     .foregroundStyle(AppTheme.textSecondary)
                     .multilineTextAlignment(.center)

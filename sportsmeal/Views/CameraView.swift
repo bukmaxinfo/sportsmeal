@@ -113,7 +113,7 @@ struct CameraView: View {
             Text("API Key Required")
                 .font(.title2.bold())
                 .foregroundStyle(AppTheme.textPrimary)
-            Text("To analyze meal photos, set up your Anthropic API key first.")
+            Text("To analyze meal photos, set up your own Anthropic API key first. SportsMeal does not include AI usage for you.")
                 .font(.subheadline)
                 .foregroundStyle(AppTheme.textSecondary)
                 .multilineTextAlignment(.center)

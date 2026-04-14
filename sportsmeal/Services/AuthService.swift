@@ -41,9 +41,27 @@ final class AuthService {
         return name
     }
 
+    // MARK: - Simulator Detection
+
+    static var isSimulator: Bool {
+        #if targetEnvironment(simulator)
+        return true
+        #else
+        return false
+        #endif
+    }
+
     // MARK: - Session Check on Launch
 
     func checkExistingSession() async {
+        // On Simulator, bypass Sign in with Apple (it doesn't work) and auto-authenticate
+        if Self.isSimulator {
+            await MainActor.run {
+                self.authState = .authenticated(userID: "simulator-user", displayName: "Simulator User")
+            }
+            return
+        }
+
         guard let savedUserID = readKeychain(key: Self.appleUserIDKey) else {
             await MainActor.run { authState = .unauthenticated }
             return

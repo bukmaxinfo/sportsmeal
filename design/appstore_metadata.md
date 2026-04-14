@@ -7,10 +7,10 @@ SportsMeal — AI Calorie Tracker
 AI-Powered Nutrition Companion
 
 ## Promotional Text (170 chars)
-Photograph your meals for instant AI calorie + macro estimates. Track exercise, scan barcodes, manage your pantry, and get personalized recipe suggestions.
+Bring your own Anthropic API key to photograph meals for AI calorie + macro estimates. Track exercise, scan barcodes, manage your pantry, and get recipes.
 
 ## Description
-SportsMeal uses Claude AI to analyze your meal photos and instantly estimate calories, protein, carbs, and fat — no manual logging required.
+SportsMeal is a privacy-first nutrition tracker that uses your own Anthropic API key to analyze meal photos and estimate calories, protein, carbs, and fat — without tedious manual food search.
 
 **Snap a Photo, Get the Numbers**
 Simply photograph your meal and SportsMeal identifies each food item with calorie and macro breakdowns. It understands portion sizes, cooking methods, and cuisines from Chinese to Mediterranean.
@@ -38,7 +38,9 @@ Simply photograph your meal and SportsMeal identifies each food item with calori
 Sync weight, steps, and active calories with Apple Health. Your workout sessions and meal data flow seamlessly between apps.
 
 **Privacy First**
-Your API key is stored securely in the iOS Keychain. Meal photos are analyzed via the Anthropic API and never stored on external servers. All personal data stays on your device.
+SportsMeal uses Sign in with Apple and stores your API key securely in the iOS Keychain. Meal photos are analyzed via the Anthropic API, while most personal data stays on your device. Limited account information may be stored in your private iCloud / CloudKit storage to support account state and private sync behavior.
+
+SportsMeal is free to download. AI features require your own Anthropic API key, so you control usage and costs.
 
 Available in English and Chinese (Simplified).
 

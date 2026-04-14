@@ -16,7 +16,7 @@ struct APIKeySettingsView: View {
     var body: some View {
         Form {
             Section {
-                Text("SportsMeal uses the Claude API to analyze meal photos. You'll need an Anthropic API key to use this feature.")
+                Text("SportsMeal uses the Claude API to analyze meal photos. Bring your own Anthropic API key to enable AI features; API usage is billed directly by Anthropic to your account.")
                     .font(.subheadline)
                     .foregroundStyle(AppTheme.textSecondary)
             }

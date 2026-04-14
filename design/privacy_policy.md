@@ -9,7 +9,7 @@ SportsMeal ("the App") is a nutrition tracking app that uses AI to analyze meal 
 ## Data Collection and Storage
 
 ### Data Stored on Your Device
-All personal data is stored locally on your device using Apple's SwiftData framework:
+Most personal data is stored locally on your device using Apple's SwiftData framework:
 - User profile (name, age, height, weight, sex, activity level, dietary preferences)
 - Meal history (food items, calories, macros, timestamps)
 - Meal photos (stored locally using iOS external storage)
@@ -18,10 +18,19 @@ All personal data is stored locally on your device using Apple's SwiftData frame
 - Meal templates
 - App preferences
 
-**This data is never transmitted to our servers.** We do not operate any servers. The App has no user accounts and no cloud sync.
+We do not operate our own backend servers for this app.
+
+### Account and Private iCloud Sync
+SportsMeal uses Sign in with Apple for authentication. To help preserve account state and support private sync behavior, the app may store limited account data in your private iCloud / CloudKit storage, such as:
+- your Apple user identifier
+- display name
+- email address if Apple provides it during sign in
+- account record timestamps such as creation or last-seen time
+
+This CloudKit usage is best-effort and tied to your own Apple account. We do not sell this data or use it for advertising.
 
 ### API Key Storage
-Your Anthropic API key is stored securely in the iOS Keychain, Apple's encrypted credential storage system. The key is never stored in plaintext, never logged, and never transmitted to any party other than Anthropic's API.
+Your Anthropic API key is stored securely in the iOS Keychain, Apple's encrypted credential storage system. The key is never stored in plaintext, never logged, and never transmitted to any party other than Anthropic's API. If you choose to use the optional Gemini chat feature, your Gemini API key is also stored in the iOS Keychain.
 
 ## Third-Party Services
 

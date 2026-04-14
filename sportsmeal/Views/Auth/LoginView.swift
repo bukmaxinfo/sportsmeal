@@ -66,9 +66,9 @@ struct LoginView: View {
                 subtitle: "Personalised targets based on your body & goals"
             )
             featureRow(
-                icon: "lock.icloud.fill",
-                title: "Private Cloud Sync",
-                subtitle: "Your data lives in your own iCloud — never sold"
+                icon: "person.crop.circle.badge.checkmark",
+                title: "Private Account Sync",
+                subtitle: "Sign in with Apple and keep your account data private"
             )
         }
     }
@@ -139,7 +139,7 @@ struct LoginView: View {
                 .clipShape(RoundedRectangle(cornerRadius: 14))
             }
 
-            Text("Your data is stored privately in your own iCloud account.\nWe never see or sell your information.")
+            Text("Sign in with Apple keeps your account private. Most data stays on your device, and limited account data may sync through your private iCloud storage.")
                 .font(.caption2)
                 .foregroundStyle(AppTheme.textTertiary)
                 .multilineTextAlignment(.center)
