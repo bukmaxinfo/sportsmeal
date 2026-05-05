@@ -318,3 +318,11 @@
 "Stretching" = "Stretching";
 "Cardio" = "Cardio";
 "Workout" = "Workout";
+
+/* Estimate disclosures (v1.0 audit A1) */
+"Est." = "Est.";
+"Estimates from AI. Tap a dish to log; you can correct the calorie value at log time." = "Estimates from AI. Tap a dish to log; you can correct the calorie value at log time.";
+"Estimate from AI. You can correct the calorie value when you log this recipe as a meal." = "Estimate from AI. You can correct the calorie value when you log this recipe as a meal.";
+
+/* Session-scope cost meter disclaimer (v1.0 audit A2) */
+"Session only — resets when you close the app. Uses Claude Sonnet pricing. Persistent, multi-provider cost tracking lands in v1.1." = "Session only — resets when you close the app. Uses Claude Sonnet pricing. Persistent, multi-provider cost tracking lands in v1.1.";

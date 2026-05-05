@@ -26,7 +26,7 @@ struct APIUsageView: View {
                         .foregroundStyle(AppTheme.gold)
                 }
 
-                Text("Based on Claude Sonnet pricing. Actual costs may vary.")
+                Text("Session only — resets when you close the app. Uses Claude Sonnet pricing. Persistent, multi-provider cost tracking lands in v1.1.")
                     .font(.caption)
                     .foregroundStyle(AppTheme.textTertiary)
             }

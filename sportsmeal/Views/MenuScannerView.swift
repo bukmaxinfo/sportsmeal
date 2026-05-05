@@ -141,10 +141,15 @@ struct MenuScannerView: View {
 
                     Spacer()
 
-                    VStack(alignment: .trailing) {
-                        Text("\(dish.estimatedCalories)")
-                            .font(.subheadline.bold())
-                            .foregroundStyle(dish.fitsWithinBudget ? AppTheme.gold : AppTheme.negative)
+                    VStack(alignment: .trailing, spacing: 2) {
+                        HStack(spacing: 3) {
+                            Text("Est.")
+                                .font(.caption2)
+                                .foregroundStyle(AppTheme.textTertiary)
+                            Text("\(dish.estimatedCalories)")
+                                .font(.subheadline.bold())
+                                .foregroundStyle(dish.fitsWithinBudget ? AppTheme.gold : AppTheme.negative)
+                        }
                         Text("kcal")
                             .font(.caption2)
                             .foregroundStyle(AppTheme.textTertiary)
@@ -152,6 +157,12 @@ struct MenuScannerView: View {
                 }
                 .luxuryCard()
             }
+
+            // Estimate disclosure
+            Text("Estimates from AI. Tap a dish to log; you can correct the calorie value at log time.")
+                .font(.caption2)
+                .foregroundStyle(AppTheme.textTertiary)
+                .padding(.top, 4)
 
             // Legend
             HStack(spacing: 16) {

@@ -151,9 +151,12 @@ private struct RecipeCard: View {
                 Image(systemName: expanded ? "chevron.up" : "chevron.down").foregroundStyle(AppTheme.textTertiary)
             }.contentShape(Rectangle()).onTapGesture { withAnimation { expanded.toggle() } }
             HStack(spacing: 16) {
-                Label("\(recipe.estimatedCalories) kcal", systemImage: "flame.fill").foregroundStyle(AppTheme.warning)
+                Label("Est. \(recipe.estimatedCalories) kcal", systemImage: "flame.fill").foregroundStyle(AppTheme.warning)
                 Label("\(recipe.prepTimeMinutes) min", systemImage: "clock.fill").foregroundStyle(AppTheme.textSecondary)
             }.font(.caption)
+            Text("Estimate from AI. You can correct the calorie value when you log this recipe as a meal.")
+                .font(.caption2)
+                .foregroundStyle(AppTheme.textTertiary)
             if expanded {
                 Divider().background(AppTheme.border)
                 Text("Ingredients").font(.caption.weight(.semibold)).foregroundStyle(AppTheme.gold)

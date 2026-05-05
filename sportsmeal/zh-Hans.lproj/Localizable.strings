@@ -322,3 +322,11 @@
 "Stretching" = "拉伸";
 "Cardio" = "有氧";
 "Workout" = "锻炼";
+
+/* Estimate disclosures (v1.0 audit A1) */
+"Est." = "约";
+"Estimates from AI. Tap a dish to log; you can correct the calorie value at log time." = "AI 估算值。点击菜品即可记录，记录时可修正热量数值。";
+"Estimate from AI. You can correct the calorie value when you log this recipe as a meal." = "AI 估算值。将本菜谱记录为一餐时可修正热量数值。";
+
+/* Session-scope cost meter disclaimer (v1.0 audit A2) */
+"Session only — resets when you close the app. Uses Claude Sonnet pricing. Persistent, multi-provider cost tracking lands in v1.1." = "仅当前会话有效——关闭 App 后会重置。按 Claude Sonnet 单价估算。持久化与多模型成本统计将在 v1.1 版本上线。";

@@ -1,10 +1,12 @@
 # SportsMeal Privacy Policy
 
-*Last updated: April 6, 2026*
+*Last updated: April 14, 2026*
 
 ## Overview
 
 SportsMeal ("the App") is a nutrition tracking app that uses AI to analyze meal photos. Your privacy is important to us. This policy explains what data the App collects, how it is used, and your rights.
+
+**Short version.** Nothing leaves your device or your own iCloud, with two exceptions you control: (1) meal photos and text prompts are sent to Anthropic's API using your own API key, so you have a direct relationship with Anthropic; (2) if you sign in with Apple, a small identity record (Apple user ID, display name, email if provided, timestamps) is stored in your private iCloud/CloudKit container — this stays inside your Apple account and is not accessible to BUKMAX or any third party. Everything else (meals, photos, macros, weights, exercise, templates) stays on-device via SwiftData.
 
 ## Data Collection and Storage
 
@@ -30,7 +32,7 @@ SportsMeal uses Sign in with Apple for authentication. To help preserve account 
 This CloudKit usage is best-effort and tied to your own Apple account. We do not sell this data or use it for advertising.
 
 ### API Key Storage
-Your Anthropic API key is stored securely in the iOS Keychain, Apple's encrypted credential storage system. The key is never stored in plaintext, never logged, and never transmitted to any party other than Anthropic's API. If you choose to use the optional Gemini chat feature, your Gemini API key is also stored in the iOS Keychain.
+Your Anthropic API key is stored securely in the iOS Keychain, Apple's encrypted credential storage system. The key is never stored in plaintext, never logged, and never transmitted to any party other than Anthropic's API. SportsMeal v1.0 ships as single-provider (Anthropic only); additional providers (Gemini, OpenAI) are planned for v1.2 and will use the same per-provider Keychain storage pattern — at that point, each provider's key will be stored under a separate Keychain account and you can disable any provider independently.
 
 ## Third-Party Services
 
@@ -68,12 +70,13 @@ The App requests access to your photo library to select meal and menu photos for
 The App is not directed at children under 13. We do not knowingly collect personal information from children.
 
 ## Data Deletion
-All your data is stored locally on your device. To delete all App data:
-1. Delete the App from your device
-2. Your API key will be removed from the Keychain
-3. All meal history, profile data, and photos will be permanently deleted
+All meal, photo, exercise, pantry, and template data is stored locally on your device. To delete it:
+1. Delete the App from your device — this removes your Keychain-stored API key and all on-device SwiftData content.
+2. You can also remove individual meals, exercises, pantry items, and templates within the App.
 
-You can also remove individual meals, exercises, pantry items, and templates within the App.
+To delete the identity record stored in your private iCloud/CloudKit container (Apple user ID, display name, email if provided, timestamps):
+1. On iOS: Settings > [your name] > iCloud > Manage Account Storage > SportsMeal > Delete Data.
+2. This removes the CloudKit record on your own iCloud; since SportsMeal has no backend, no other copy exists.
 
 ## Changes to This Policy
 We may update this Privacy Policy from time to time. The "Last updated" date at the top will reflect any changes.
