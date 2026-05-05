@@ -1,0 +1,75 @@
+# =============================================================================
+# Xcode
+# =============================================================================
+# Per-user state — never commit
+**/xcuserdata/
+*.xcuserstate
+
+# Build artifacts (xcodebuild output, derived sources, archives)
+build/
+DerivedData/
+*.xcarchive
+*.ipa
+*.app
+*.appex
+*.dSYM.zip
+*.dSYM
+
+# Backup file from setup_extensions.rb (keep locally, don't commit)
+*.pbxproj.backup-*
+
+# Swift Package Manager
+.swiftpm/
+.build/
+Package.resolved
+Packages/
+
+# CocoaPods (not used today, but harmless if added)
+Pods/
+
+# Carthage
+Carthage/Build/
+
+# fastlane
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots/**/*.png
+fastlane/test_output
+
+# =============================================================================
+# Node (Claude Code CLI install — developer-local, not project source)
+# =============================================================================
+node_modules/
+package.json
+package-lock.json
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.npm
+
+# =============================================================================
+# Claude Code session state
+# =============================================================================
+.claude/
+
+# =============================================================================
+# Editor / OS junk
+# =============================================================================
+.DS_Store
+.AppleDouble
+.LSOverride
+*.swp
+*.swo
+*~
+.idea/
+.vscode/
+
+# =============================================================================
+# Secrets — defense in depth (the app uses BYOK from the user, no secrets in repo,
+# but block accidental .env / key file commits regardless)
+# =============================================================================
+.env
+.env.*
+*.pem
+*.key
+secrets.json
