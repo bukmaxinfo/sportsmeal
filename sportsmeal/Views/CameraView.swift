@@ -568,6 +568,7 @@ struct CameraView: View {
             portionMultiplier: portionPercent / 100.0
         )
         modelContext.insert(meal)
+        WidgetSyncHelper.sync(context: modelContext)
         withAnimation { showingSaveConfirmation = true }
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
@@ -653,6 +654,7 @@ struct CameraView: View {
         modelContext.insert(meal)
         template.useCount += 1
         template.lastUsed = Date()
+        WidgetSyncHelper.sync(context: modelContext)
 
         withAnimation { showingSaveConfirmation = true }
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) {

@@ -315,6 +315,7 @@ struct HomeView: View {
                 ForEach(todayMeals) { meal in
                     MealRowView(meal: meal, onDelete: {
                         withAnimation { modelContext.delete(meal) }
+                        WidgetSyncHelper.sync(context: modelContext)
                     })
                 }
             }

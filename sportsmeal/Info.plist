@@ -3,12 +3,12 @@
 <plist version="1.0">
 <dict>
 	<key>NSHealthShareUsageDescription</key>
-	<string>SportsMeal reads your health data to sync weight, steps, and active calories for more accurate tracking.</string>
+	<string>SportsMeal reads body weight, step count, active energy, and workouts from Apple Health to adjust your daily calorie budget. This data stays on your device and is never sent to SportsMeal servers.</string>
 	<key>NSHealthUpdateUsageDescription</key>
-	<string>SportsMeal writes meal calories and exercise sessions to Apple Health to keep your health data in one place.</string>
+	<string>SportsMeal writes your logged meal calories and exercise sessions back to Apple Health so your Health app stays current. You can turn any category off in Settings &gt; Health &gt; Data Access &amp; Devices.</string>
 	<key>NSCameraUsageDescription</key>
-	<string>SportsMeal needs camera access to photograph your meals for calorie estimation.</string>
+	<string>SportsMeal uses the camera to photograph meals so the AI can estimate calories and macros. Photos are sent to your chosen AI provider (Anthropic) using your own API key; SportsMeal does not store your photos on a server.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>SportsMeal needs photo library access to select meal photos for calorie estimation.</string>
+	<string>SportsMeal reads photos you choose to estimate calories and macros from meal images. Selected photos are sent to your chosen AI provider (Anthropic) using your own API key; SportsMeal does not keep a copy on a server.</string>
 </dict>
 </plist>

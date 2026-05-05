@@ -29,12 +29,21 @@ struct sportsmealApp: App {
         }
     }()
 
+    init() {
+        // Activate WatchConnectivity so the Watch app can send/receive data
+        WatchSyncService.shared.activate()
+    }
+
     var body: some Scene {
         WindowGroup {
             RootView()
                 .environment(authService)
                 .preferredColorScheme(.dark)
                 .tint(AppTheme.gold)
+                .onAppear {
+                    // Give WatchSyncService a context so it can handle incoming Watch messages
+                    WatchSyncService.shared.modelContext = sharedModelContainer.mainContext
+                }
         }
         .modelContainer(sharedModelContainer)
     }

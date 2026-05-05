@@ -50,7 +50,7 @@ class WatchConnectivityManager: NSObject, ObservableObject, WCSessionDelegate {
             if let calories = applicationContext["consumedCalories"] as? Double {
                 self.receivedCalories = calories
             }
-            if let budget = applicationContext["caloriBudget"] as? Double {
+            if let budget = applicationContext["calorieBudget"] as? Double {
                 self.receivedBudget = budget
             }
             if let templates = applicationContext["templates"] as? [[String: Any]] {

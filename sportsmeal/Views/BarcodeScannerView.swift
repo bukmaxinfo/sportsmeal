@@ -229,6 +229,7 @@ struct BarcodeScannerView: View {
             timestamp: Date()
         )
         modelContext.insert(meal)
+        WidgetSyncHelper.sync(context: modelContext)
         withAnimation { saved = true }
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) { saved = false }
     }

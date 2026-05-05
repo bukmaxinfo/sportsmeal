@@ -29,6 +29,61 @@ struct CalorieEntry: TimelineEntry {
     )
 }
 
+// MARK: - Shared App Group reader
+private enum SharedDefaults {
+    static let suiteName = "group.com.bukmax.sportsmeal"
+
+    private enum Key {
+        static let consumed = "widget_consumedCalories"
+        static let budget = "widget_calorieBudget"
+        static let mealCount = "widget_mealCount"
+        static let recentMeals = "widget_recentMeals"
+        static let protein = "widget_protein"
+        static let carbs = "widget_carbs"
+        static let fat = "widget_fat"
+        static let lastUpdated = "widget_lastUpdated"
+    }
+
+    static func readEntry() -> CalorieEntry {
+        guard let defaults = UserDefaults(suiteName: suiteName) else {
+            return .placeholder
+        }
+
+        let lastUpdated = Date(timeIntervalSince1970: defaults.double(forKey: Key.lastUpdated))
+        let isFromToday = Calendar.current.isDateInToday(lastUpdated)
+
+        // If data is stale (not from today), show zeroed-out state
+        guard isFromToday else {
+            return CalorieEntry(
+                date: Date(),
+                consumed: 0,
+                budget: defaults.double(forKey: Key.budget).nonZero ?? 2000,
+                mealCount: 0,
+                recentMeals: [],
+                protein: 0,
+                carbs: 0,
+                fat: 0
+            )
+        }
+
+        return CalorieEntry(
+            date: Date(),
+            consumed: defaults.double(forKey: Key.consumed),
+            budget: defaults.double(forKey: Key.budget).nonZero ?? 2000,
+            mealCount: defaults.integer(forKey: Key.mealCount),
+            recentMeals: defaults.stringArray(forKey: Key.recentMeals) ?? [],
+            protein: defaults.double(forKey: Key.protein),
+            carbs: defaults.double(forKey: Key.carbs),
+            fat: defaults.double(forKey: Key.fat)
+        )
+    }
+}
+
+private extension Double {
+    /// Returns nil if zero, so callers can use `??` for default values.
+    var nonZero: Double? { self == 0 ? nil : self }
+}
+
 // MARK: - Timeline Provider
 struct CalorieTimelineProvider: TimelineProvider {
     func placeholder(in context: Context) -> CalorieEntry {
@@ -36,14 +91,16 @@ struct CalorieTimelineProvider: TimelineProvider {
     }
 
     func getSnapshot(in context: Context, completion: @escaping (CalorieEntry) -> Void) {
-        completion(.placeholder)
+        completion(SharedDefaults.readEntry())
     }
 
     func getTimeline(in context: Context, completion: @escaping (Timeline<CalorieEntry>) -> Void) {
-        // In a real implementation, read from a shared App Group container
-        // For now, use placeholder data
-        let entry = CalorieEntry.placeholder
-        let nextUpdate = Calendar.current.date(byAdding: .minute, value: 30, to: Date())!
+        let entry = SharedDefaults.readEntry()
+        // Refresh at midnight (new day resets) or in 30 min, whichever is sooner.
+        // The main app also triggers immediate reloads via WidgetCenter on every meal change.
+        let midnight = Calendar.current.startOfDay(for: Date()).addingTimeInterval(86400)
+        let thirtyMin = Date().addingTimeInterval(30 * 60)
+        let nextUpdate = min(midnight, thirtyMin)
         let timeline = Timeline(entries: [entry], policy: .after(nextUpdate))
         completion(timeline)
     }
@@ -196,6 +253,7 @@ struct LockScreenCalorieView: View {
             Text("kcal")
                 .font(.system(size: 9))
         }
+        .containerBackground(.clear, for: .widget)
     }
 }
 

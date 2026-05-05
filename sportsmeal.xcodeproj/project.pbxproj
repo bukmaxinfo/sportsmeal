@@ -6,7 +6,28 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		32DEC53390AFF8B19A1E6DC5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46759916DBD1EE182D2E5387 /* Foundation.framework */; };
+		373344792D8212A15D45483D /* SportsMealWidget.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = A9E8511BEB1751BC10BF116D /* SportsMealWidget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		ACCCEA7AF9A3431FF47802E1 /* SportsMealWatch.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = B0BB1BE9C6639CBC37A38616 /* SportsMealWatch.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		E5F47A48CA671329654768CA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 959987A32AA24321A48872DC /* Foundation.framework */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
+		BEBE965D7C9EC48ACFAA08F2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EF60AF042F836F3500AC9B70 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 03C614B1DACFC003B151C5F1;
+			remoteInfo = SportsMealWatch;
+		};
+		CDE8BB2B41EA578E0F867280 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EF60AF042F836F3500AC9B70 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 48221DD387B1A87D818CEAD6;
+			remoteInfo = SportsMealWidget;
+		};
 		EF60AF212F836F3700AC9B70 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = EF60AF042F836F3500AC9B70 /* Project object */;
@@ -23,7 +44,36 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		5C51645993C7EC005F9C54F0 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				373344792D8212A15D45483D /* SportsMealWidget.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7B29CE515898C06346D5DF75 /* Embed Watch Content */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+			dstSubfolderSpec = 16;
+			files = (
+				ACCCEA7AF9A3431FF47802E1 /* SportsMealWatch.app in Embed Watch Content */,
+			);
+			name = "Embed Watch Content";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		46759916DBD1EE182D2E5387 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS18.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		959987A32AA24321A48872DC /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/WatchOS.platform/Developer/SDKs/WatchOS11.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		A9E8511BEB1751BC10BF116D /* SportsMealWidget.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = SportsMealWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		B0BB1BE9C6639CBC37A38616 /* SportsMealWatch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SportsMealWatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF60AF0C2F836F3500AC9B70 /* sportsmeal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = sportsmeal.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF60AF202F836F3700AC9B70 /* sportsmealTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = sportsmealTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF60AF2A2F836F3700AC9B70 /* sportsmealUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = sportsmealUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -40,6 +90,20 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		55ECBDBA4AA8280A2AE15A57 /* SportsMealWidget */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+			);
+			path = SportsMealWidget;
+			sourceTree = "<group>";
+		};
+		7D624A06E47A93A650FCC74D /* SportsMealWatch */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+			);
+			path = SportsMealWatch;
+			sourceTree = "<group>";
+		};
 		EF60AF0E2F836F3500AC9B70 /* sportsmeal */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
@@ -50,17 +114,37 @@
 		};
 		EF60AF232F836F3700AC9B70 /* sportsmealTests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+			);
 			path = sportsmealTests;
 			sourceTree = "<group>";
 		};
 		EF60AF2D2F836F3700AC9B70 /* sportsmealUITests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+			);
 			path = sportsmealUITests;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		53481F70156DAA92437E9F01 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				32DEC53390AFF8B19A1E6DC5 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D735AEA787582E6B4AC3DA64 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E5F47A48CA671329654768CA /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		EF60AF092F836F3500AC9B70 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -85,6 +169,31 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3ED8F40B9F1842D04EAD4749 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				7F24559EBAE131A17ABBB336 /* iOS */,
+				71BD5420619A820641BFEE4A /* watchOS */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		71BD5420619A820641BFEE4A /* watchOS */ = {
+			isa = PBXGroup;
+			children = (
+				959987A32AA24321A48872DC /* Foundation.framework */,
+			);
+			name = watchOS;
+			sourceTree = "<group>";
+		};
+		7F24559EBAE131A17ABBB336 /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				46759916DBD1EE182D2E5387 /* Foundation.framework */,
+			);
+			name = iOS;
+			sourceTree = "<group>";
+		};
 		EF60AF032F836F3500AC9B70 = {
 			isa = PBXGroup;
 			children = (
@@ -92,6 +201,9 @@
 				EF60AF232F836F3700AC9B70 /* sportsmealTests */,
 				EF60AF2D2F836F3700AC9B70 /* sportsmealUITests */,
 				EF60AF0D2F836F3500AC9B70 /* Products */,
+				3ED8F40B9F1842D04EAD4749 /* Frameworks */,
+				55ECBDBA4AA8280A2AE15A57 /* SportsMealWidget */,
+				7D624A06E47A93A650FCC74D /* SportsMealWatch */,
 			);
 			sourceTree = "<group>";
 		};
@@ -101,6 +213,8 @@
 				EF60AF0C2F836F3500AC9B70 /* sportsmeal.app */,
 				EF60AF202F836F3700AC9B70 /* sportsmealTests.xctest */,
 				EF60AF2A2F836F3700AC9B70 /* sportsmealUITests.xctest */,
+				A9E8511BEB1751BC10BF116D /* SportsMealWidget.appex */,
+				B0BB1BE9C6639CBC37A38616 /* SportsMealWatch.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -108,6 +222,46 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		03C614B1DACFC003B151C5F1 /* SportsMealWatch */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 394BE933FE42A5029151BA13 /* Build configuration list for PBXNativeTarget "SportsMealWatch" */;
+			buildPhases = (
+				3DE9AC7BB2E52E10D7428457 /* Sources */,
+				D735AEA787582E6B4AC3DA64 /* Frameworks */,
+				EE8566243FAD8C537B699463 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				7D624A06E47A93A650FCC74D /* SportsMealWatch */,
+			);
+			name = SportsMealWatch;
+			productName = SportsMealWatch;
+			productReference = B0BB1BE9C6639CBC37A38616 /* SportsMealWatch.app */;
+			productType = "com.apple.product-type.application";
+		};
+		48221DD387B1A87D818CEAD6 /* SportsMealWidget */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9D573245154D312ADFF0EB7B /* Build configuration list for PBXNativeTarget "SportsMealWidget" */;
+			buildPhases = (
+				C110D0CFF90637EF2F753B80 /* Sources */,
+				53481F70156DAA92437E9F01 /* Frameworks */,
+				D18120F725ACF7AAA616D24D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				55ECBDBA4AA8280A2AE15A57 /* SportsMealWidget */,
+			);
+			name = SportsMealWidget;
+			productName = SportsMealWidget;
+			productReference = A9E8511BEB1751BC10BF116D /* SportsMealWidget.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		EF60AF0B2F836F3500AC9B70 /* sportsmeal */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = EF60AF332F836F3700AC9B70 /* Build configuration list for PBXNativeTarget "sportsmeal" */;
@@ -115,17 +269,19 @@
 				EF60AF082F836F3500AC9B70 /* Sources */,
 				EF60AF092F836F3500AC9B70 /* Frameworks */,
 				EF60AF0A2F836F3500AC9B70 /* Resources */,
+				5C51645993C7EC005F9C54F0 /* Embed Foundation Extensions */,
+				7B29CE515898C06346D5DF75 /* Embed Watch Content */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				2FECEFDEEA44B57193017385 /* PBXTargetDependency */,
+				FDCEEC138B33B15307BCD478 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				EF60AF0E2F836F3500AC9B70 /* sportsmeal */,
 			);
 			name = sportsmeal;
-			packageProductDependencies = (
-			);
 			productName = sportsmeal;
 			productReference = EF60AF0C2F836F3500AC9B70 /* sportsmeal.app */;
 			productType = "com.apple.product-type.application";
@@ -147,8 +303,6 @@
 				EF60AF232F836F3700AC9B70 /* sportsmealTests */,
 			);
 			name = sportsmealTests;
-			packageProductDependencies = (
-			);
 			productName = sportsmealTests;
 			productReference = EF60AF202F836F3700AC9B70 /* sportsmealTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -170,8 +324,6 @@
 				EF60AF2D2F836F3700AC9B70 /* sportsmealUITests */,
 			);
 			name = sportsmealUITests;
-			packageProductDependencies = (
-			);
 			productName = sportsmealUITests;
 			productReference = EF60AF2A2F836F3700AC9B70 /* sportsmealUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
@@ -217,11 +369,27 @@
 				EF60AF0B2F836F3500AC9B70 /* sportsmeal */,
 				EF60AF1F2F836F3700AC9B70 /* sportsmealTests */,
 				EF60AF292F836F3700AC9B70 /* sportsmealUITests */,
+				48221DD387B1A87D818CEAD6 /* SportsMealWidget */,
+				03C614B1DACFC003B151C5F1 /* SportsMealWatch */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		D18120F725ACF7AAA616D24D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EE8566243FAD8C537B699463 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		EF60AF0A2F836F3500AC9B70 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -246,6 +414,20 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		3DE9AC7BB2E52E10D7428457 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C110D0CFF90637EF2F753B80 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		EF60AF082F836F3500AC9B70 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -270,6 +452,12 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		2FECEFDEEA44B57193017385 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SportsMealWidget;
+			target = 48221DD387B1A87D818CEAD6 /* SportsMealWidget */;
+			targetProxy = CDE8BB2B41EA578E0F867280 /* PBXContainerItemProxy */;
+		};
 		EF60AF222F836F3700AC9B70 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = EF60AF0B2F836F3500AC9B70 /* sportsmeal */;
@@ -280,9 +468,129 @@
 			target = EF60AF0B2F836F3500AC9B70 /* sportsmeal */;
 			targetProxy = EF60AF2B2F836F3700AC9B70 /* PBXContainerItemProxy */;
 		};
+		FDCEEC138B33B15307BCD478 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SportsMealWatch;
+			target = 03C614B1DACFC003B151C5F1 /* SportsMealWatch */;
+			targetProxy = BEBE965D7C9EC48ACFAA08F2 /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		15EADA021A64B85C27FFC61A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 5767MTQ2K3;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = SportsMeal;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_WKApplication = YES;
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = BK.sportsmeal;
+				INFOPLIST_KEY_WKWatchOnly = NO;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = BK.sportsmeal.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "watchsimulator watchos";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				VALIDATE_PRODUCT = YES;
+				WATCHOS_DEPLOYMENT_TARGET = 11.0;
+			};
+			name = Release;
+		};
+		6050FB7824CB4ED641C606F5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_ENTITLEMENTS = SportsMealWidgetExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 5767MTQ2K3;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "SportsMeal Widget";
+				INFOPLIST_KEY_NSExtensionPointIdentifier = "com.apple.widgetkit-extension";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = BK.sportsmeal.SportsMealWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		C0C3B6CCEBF7E5AEB579C524 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_ENTITLEMENTS = SportsMealWidgetExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 5767MTQ2K3;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "SportsMeal Widget";
+				INFOPLIST_KEY_NSExtensionPointIdentifier = "com.apple.widgetkit-extension";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = BK.sportsmeal.SportsMealWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		E054881983E0D068C2B42C75 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 5767MTQ2K3;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = SportsMeal;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_WKApplication = YES;
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = BK.sportsmeal;
+				INFOPLIST_KEY_WKWatchOnly = NO;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = BK.sportsmeal.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "watchsimulator watchos";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 11.0;
+			};
+			name = Debug;
+		};
 		EF60AF342F836F3700AC9B70 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -539,6 +847,24 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		394BE933FE42A5029151BA13 /* Build configuration list for PBXNativeTarget "SportsMealWatch" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				15EADA021A64B85C27FFC61A /* Release */,
+				E054881983E0D068C2B42C75 /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		9D573245154D312ADFF0EB7B /* Build configuration list for PBXNativeTarget "SportsMealWidget" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C0C3B6CCEBF7E5AEB579C524 /* Release */,
+				6050FB7824CB4ED641C606F5 /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		EF60AF072F836F3500AC9B70 /* Build configuration list for PBXProject "sportsmeal" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

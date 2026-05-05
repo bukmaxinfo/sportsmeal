@@ -1,15 +1,23 @@
 import SwiftUI
 
 struct WatchHomeView: View {
-    @State private var consumed: Double = 0
-    @State private var budget: Double = 2000
-    @State private var templates: [WatchMealTemplate] = []
+    @StateObject private var connectivity = WatchConnectivityManager.shared
     @State private var exerciseActive = false
     @State private var exerciseType: String = "Running"
     @State private var exerciseStartTime: Date?
 
+    private var consumed: Double { connectivity.receivedCalories }
+    private var budget: Double { connectivity.receivedBudget }
     private var remaining: Double { max(0, budget - consumed) }
     private var progress: Double { budget > 0 ? min(consumed / budget, 1.0) : 0 }
+
+    private var templates: [WatchMealTemplate] {
+        connectivity.receivedTemplates.compactMap { dict in
+            guard let name = dict["name"] as? String,
+                  let calories = dict["calories"] as? Double else { return nil }
+            return WatchMealTemplate(name: name, calories: calories)
+        }
+    }
 
     var body: some View {
         NavigationStack {
@@ -21,6 +29,8 @@ struct WatchHomeView: View {
                     // Quick Log
                     if !templates.isEmpty {
                         quickLogSection
+                    } else {
+                        noTemplatesHint
                     }
 
                     // Exercise
@@ -31,8 +41,22 @@ struct WatchHomeView: View {
             .navigationTitle("SportsMeal")
         }
         .onAppear {
-            loadData()
+            connectivity.activate()
         }
+    }
+
+    // MARK: - No Templates Hint
+    private var noTemplatesHint: some View {
+        VStack(spacing: 4) {
+            Text("No meal templates yet")
+                .font(.caption2.weight(.semibold))
+                .foregroundStyle(Color(red: 0.85, green: 0.72, blue: 0.45))
+            Text("Log a few meals on iPhone to see quick-log options here.")
+                .font(.system(size: 10))
+                .foregroundStyle(.white.opacity(0.4))
+                .multilineTextAlignment(.center)
+        }
+        .padding(8)
     }
 
     // MARK: - Calorie Ring
@@ -145,18 +169,9 @@ struct WatchHomeView: View {
     }
 
     // MARK: - Actions
-    private func loadData() {
-        // In production, load via WatchConnectivity from iPhone app
-        // Placeholder data for now
-        templates = [
-            WatchMealTemplate(name: "Oatmeal & Fruit", calories: 350),
-            WatchMealTemplate(name: "Chicken Salad", calories: 420),
-        ]
-    }
-
     private func logMeal(_ template: WatchMealTemplate) {
-        consumed += template.calories
-        // In production, send via WatchConnectivity to iPhone
+        // Send to iPhone via WatchConnectivity — iPhone handles SwiftData insert + widget sync
+        connectivity.sendMealLog(templateName: template.name, calories: template.calories)
     }
 
     private func startExercise(_ type: String) {
@@ -166,9 +181,12 @@ struct WatchHomeView: View {
     }
 
     private func stopExercise() {
+        guard let start = exerciseStartTime else { return }
+        let durationMinutes = Int(Date().timeIntervalSince(start) / 60)
         exerciseActive = false
         exerciseStartTime = nil
-        // In production, send exercise session via WatchConnectivity
+        // Send to iPhone via WatchConnectivity
+        connectivity.sendExerciseSession(type: exerciseType, durationMinutes: max(durationMinutes, 1))
     }
 }
 

@@ -79,6 +79,7 @@ struct HistoryView: View {
                                 .swipeActions(edge: .trailing, allowsFullSwipe: false) {
                                     Button(role: .destructive) {
                                         withAnimation { modelContext.delete(meal) }
+                                        WidgetSyncHelper.sync(context: modelContext)
                                     } label: {
                                         Label("Delete", systemImage: "trash")
                                     }
@@ -462,6 +463,7 @@ struct MealDetailView: View {
         .confirmationDialog("Delete this meal?", isPresented: $showingDeleteConfirmation, titleVisibility: .visible) {
             Button("Delete", role: .destructive) {
                 modelContext.delete(meal)
+                WidgetSyncHelper.sync(context: modelContext)
                 dismiss()
             }
             Button("Cancel", role: .cancel) {}
